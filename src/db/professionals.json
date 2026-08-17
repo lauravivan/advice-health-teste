@@ -1,0 +1,78 @@
+[
+  {
+    "id": "1",
+    "name": "Dra. Ana Silva",
+    "crm": "CRM-SP 0304",
+    "bio": "Como LGBTQIAPN+ que sou, além de achar super interessante e inovadora a ideia do projeto, quis fazer parte, primeiramente, para ajudar os meus iguais, mas também por ver a necessidade de profissionais que se importam conosco e com nossas necessidades. Sei que muita coisa mudou nos últimos anos, porém, por fazer parte de uma profissão, a meu ver, ainda preconceituosa e segregacionista, acho importante como profissional me dedicar a fazer a diferença, e mostrar que todos nós merecemos respeito em todos os tratamentos, respeitando a individualidade do nosso público.",
+    "specialty": "Endocrinologista",
+    "expertise": "Especialista em diabetes, obesidade e distúrbios hormonais com mais de 15 anos de experiência",
+    "experience_years": 15,
+    "education": "Faculdade de Medicina da USP",
+    "phone": "+55 (11) 99999-1111",
+    "consultation_info": {
+      "procedure": "Consulta em endocrinologia",
+      "price": "R$ 450,00",
+      "address": "Av. Paulista, 1000 - São Paulo, SP",
+      "available_times": ["08:00", "09:00", "10:00", "14:00", "15:00"]
+    },
+    "payment_options": ["Convênio", "Particular"],
+    "picture": "pro-example"
+  },
+  {
+    "id": "2",
+    "name": "Dr. Rafael Souza",
+    "crm": "CRM-RJ 4821",
+    "bio": "Escolhi a medicina porque sempre acreditei que cuidar é um ato de amor e resistência. Como pessoa negra, sei o quanto a desigualdade afeta o acesso à saúde e, por isso, quero ser ponte entre conhecimento técnico e acolhimento humano. Meu objetivo é oferecer não apenas tratamento, mas também escuta e respeito às histórias de cada paciente.",
+    "specialty": "Psiquiatra",
+    "expertise": "Atuação em ansiedade, depressão e saúde mental LGBTQIA+",
+    "experience_years": 10,
+    "education": "Faculdade de Medicina da UFRJ",
+    "phone": "+55 (21) 98888-2222",
+    "consultation_info": {
+      "procedure": "Consulta em psiquiatria",
+      "price": "R$ 350,00",
+      "address": "Rua do Catete, 200 - Rio de Janeiro, RJ",
+      "available_times": ["09:00", "11:00", "13:00", "16:00", "18:00"]
+    },
+    "payment_options": ["Convênio"],
+    "picture": "pro-example"
+  },
+  {
+    "id": "3",
+    "name": "Dra. Camila Ferreira",
+    "crm": "CRM-MG 1590",
+    "bio": "Acredito que a saúde vai além do corpo físico — envolve identidade, contexto e vivências únicas. Ao longo da minha trajetória, percebi como o olhar inclusivo pode transformar o cuidado. Meu compromisso é construir um espaço seguro, onde cada paciente se sinta valorizado, reconhecido e respeitado em sua individualidade.",
+    "specialty": "Ginecologista",
+    "expertise": "Especialista em saúde reprodutiva, contracepção e pré-natal",
+    "experience_years": 12,
+    "education": "Faculdade de Ciências Médicas da UNICAMP",
+    "phone": "+55 (19) 97777-3333",
+    "consultation_info": {
+      "procedure": "Consulta em ginecologia",
+      "price": "R$ 400,00",
+      "address": "Rua Barão de Itapura, 1500 - Campinas, SP",
+      "available_times": ["08:00", "10:00", "14:00", "15:00", "17:00"]
+    },
+    "payment_options": ["Particular"],
+    "picture": "pro-example"
+  },
+  {
+    "id": "4",
+    "name": "Dr. João Pereira",
+    "crm": "CRM-BA 7723",
+    "bio": "Desde cedo entendi que a medicina precisava ser mais diversa e representativa. Trabalhar com saúde não é apenas aplicar protocolos, mas enxergar pessoas em sua totalidade. Quero ser parte da mudança que torna o sistema de saúde mais humano, inclusivo e consciente das diferentes realidades sociais.",
+    "specialty": "Clínico geral",
+    "expertise": "Atendimento em atenção primária com foco em prevenção e saúde comunitária",
+    "experience_years": 8,
+    "education": "Faculdade de Medicina da UFAM",
+    "phone": "+55 (92) 96666-4444",
+    "consultation_info": {
+      "procedure": "Consulta clínica geral",
+      "price": "R$ 250,00",
+      "address": "Av. Sete de Setembro, 300 - Manaus, AM",
+      "available_times": ["08:00", "09:30", "11:00", "14:00", "16:00"]
+    },
+    "payment_options": ["Convênio", "Particular"],
+    "picture": "pro-example"
+  }
+]
