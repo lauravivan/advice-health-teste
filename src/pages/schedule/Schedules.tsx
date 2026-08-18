@@ -11,9 +11,8 @@ import {
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import AddEditSchedule from "./AddEditSchedule";
-import useScheduleStore from "@/store/scheduleStore";
 import { getSafeDate } from "@/helpers/date";
-import useProfessionalStore from "@/store/professionalStore";
+import Dates from "@/components/Dates";
 
 const getDaysOfTheMonth = (date: Date): Date[] => {
   const firstDay = startOfMonth(date);
@@ -35,8 +34,7 @@ enum SchedulesView {
 }
 
 const Schedules = () => {
-  const { getSchedulesByDate } = useScheduleStore();
-  const { getProfessional } = useProfessionalStore();
+
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [currentDate, setCurrentDate] = useState<Date>(getSafeDate(new Date()));
   const [editDateMode, setEditDateMode] = useState(false);
@@ -53,26 +51,6 @@ const Schedules = () => {
     const date = e.currentTarget.value;
     setCurrentDate(getSafeDate(new Date(date)));
     setEditDateMode(false);
-  };
-
-  const Dates = ({ date }: { date: Date }) => {
-    return getSchedulesByDate(getSafeDate(date)).map((s) => (
-      <div
-        className="d-flex flex-column bg-secondary rounded text-light p-2"
-        key={s.id}
-      >
-        <div className="d-flex gap-2 align-items-center">
-          <span className="fs-6">Paciente</span>
-          <span className="fw-bold">{s.patient.fullName}</span>
-        </div>
-        <div className="d-flex gap-2 align-items-center">
-          <span className="fs-6">Profissional</span>
-          <span className="fw-bold">
-            {getProfessional(s.professional)?.fullName}
-          </span>
-        </div>
-      </div>
-    ));
   };
 
   return (
