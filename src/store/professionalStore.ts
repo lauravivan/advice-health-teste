@@ -1,21 +1,36 @@
 import type { Professional } from "@/types/Professional";
 import { create } from "zustand";
-import professionals from "@/db/professionals.json";
+import { v7 as uuidv7 } from "uuid";
 
-const getProfessional = (id: string): Professional | undefined =>
-  professionals.find((p) => p.id === id);
-
-interface ProfessionalStoreState {
-  professional: Professional | undefined;
-  setProfessional: (id: string) => void;
+interface CreateProfessional {
+  name: string;
+  crm: string;
+  specialty: string;
 }
 
-const useProfessionalStore = create<ProfessionalStoreState>((set) => ({
-  professional: undefined,
-  setProfessional: (id: string) =>
-    set(() => ({
-      professional: getProfessional(id),
-    })),
+interface ProfessionalStoreState {
+  professionals: Professional[];
+  createProfessional: (newProfessional: CreateProfessional) => void;
+  getProfessionals: () => Professional[];
+}
+
+const useProfessionalStore = create<ProfessionalStoreState>((set, get) => ({
+  professionals: [],
+  createProfessional: (newProfessional: CreateProfessional) =>
+    set((state) => {
+      const professionals = [...state.professionals];
+
+      professionals.push({
+        ...newProfessional,
+        id: uuidv7(),
+      });
+
+      return {
+        ...state,
+        professionals,
+      };
+    }),
+  getProfessionals: () => get().professionals,
 }));
 
 export default useProfessionalStore;

@@ -5,6 +5,8 @@ import Header from "./components/Header";
 import Dashboard from "./pages/home/Dashboard";
 import Schedules from "./pages/schedule/Schedules";
 import Professionals from "./pages/professional/Professionals";
+import AddEditProfessional from "./pages/professional/AddEditProfessional";
+import navigation from "./navigation";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/profissionais" element={<Professionals />} />
               <Route path="/schedules" element={<Schedules />} />
+              <Route path={navigation.navigateToProfessionals.register().pathname} element={<AddEditProfessional />} />
             </Routes>
           </div>
           <Footer />  
