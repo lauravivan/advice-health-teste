@@ -7,8 +7,25 @@ import Schedules from "./pages/schedule/Schedules";
 import Professionals from "./pages/professional/Professionals";
 import AddEditProfessional from "./pages/professional/AddEditProfessional";
 import navigation from "./navigation";
+import useProfessionalStore, { getStoredPros } from "./store/professionalStore";
+import { useEffect } from "react";
+import useScheduleStore, { getStoredSchedules } from "./store/scheduleStore";
 
 function App() {
+  const { setProfessionals } = useProfessionalStore();
+  const { setSchedules } = useScheduleStore();
+  
+  useEffect(() => {
+    const pros = getStoredPros();
+    setProfessionals(pros);
+  }, []);
+
+  
+  useEffect(() => {
+    const schedules = getStoredSchedules();
+    setSchedules(schedules);
+  }, []);
+  
   return (
     <BrowserRouter>
       <main className="d-flex w-100 h-100">

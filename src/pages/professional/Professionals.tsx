@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 
 const Professionals = () => {
-  const { getProfessionals } = useProfessionalStore();
+  const { getPaginatedProfessionals } = useProfessionalStore();
   const [openAside, setOpenAside] = useState(false);
   const [professional, setProfessional] = useState<Professional>();
 
@@ -38,15 +38,16 @@ const Professionals = () => {
             </tr>
           </thead>
           <tbody>
-            {getProfessionals().map((p) => (
+            {getPaginatedProfessionals().map((p) => (
               <tr
                 onClick={() => {
                   setOpenAside(true);
                   setProfessional(p);
                 }}
+                key={p.id}
               >
                 <th scope="row" className="fw-light">
-                  {p.name}
+                  {p.fullName}
                 </th>
                 <th scope="row" className="fw-light">
                   {p.crm}
@@ -62,11 +63,15 @@ const Professionals = () => {
       {openAside && professional && (
         <div className="border-start p-1 position-relative">
           <div className="me-5">
-            <h3>{professional.name}</h3>
+            <h3>{professional.fullName}</h3>
             <p>CRM: {professional.crm}</p>
             <p>Especialidade: {professional.specialty}</p>
           </div>
-          <button onClick={() => setOpenAside(false)} type="button" className="btn position-absolute top-0 end-0 mb-auto gap-3">
+          <button
+            onClick={() => setOpenAside(false)}
+            type="button"
+            className="btn position-absolute top-0 end-0 mb-auto gap-3"
+          >
             <CloseIcon width={25} height={25} />
           </button>
         </div>

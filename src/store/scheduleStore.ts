@@ -1,36 +1,52 @@
-import type { Professional } from "@/types/Professional";
 import { create } from "zustand";
 import { v7 as uuidv7 } from "uuid";
+import type { Schedule } from "@/types/Schedule";
+import { isSameDay } from "date-fns";
+import { getSafeDate } from "@/helpers/date";
 
-interface CreateProfessional {
-  name: string;
-  crm: string;
-  specialty: string;
+const LS_KEY = "advice-health-schedules";
+
+export function getStoredSchedules(): Schedule[] {
+  const schedules = localStorage.getItem(LS_KEY);
+  return schedules ? (JSON.parse(schedules) as Schedule[]) : [];
+}
+
+export function storeSchedules(schedules: Schedule[]) {
+  localStorage.setItem(LS_KEY, JSON.stringify(schedules));
 }
 
 interface ScheduleStoreState {
-  professionals: Professional[];
-  createProfessional: (newProfessional: CreateProfessional) => void;
-  getProfessionals: () => Professional[];
+  schedules: Schedule[];
+  createSchedule: (newSchedule: Omit<Schedule, "id">) => void;
+  getSchedulesByDate: (date: Date) => Schedule[];
+  setSchedules: (schedules: Schedule[]) => void;
 }
 
 const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
-  professionals: [],
-  createProfessional: (newProfessional: CreateProfessional) =>
+  schedules: [],
+  createSchedule: (newSchedule: Omit<Schedule, "id">) =>
     set((state) => {
-      const professionals = [...state.professionals];
+      const schedules = [...state.schedules];
 
-      professionals.push({
-        ...newProfessional,
+      schedules.push({
+        ...newSchedule,
         id: uuidv7(),
       });
 
+      storeSchedules(schedules);
+
       return {
         ...state,
-        professionals,
+        schedules,
       };
     }),
-  getProfessionals: () => get().professionals,
+  getSchedulesByDate: (date: Date) => {
+    return get().schedules.filter((s) => isSameDay(new Date(s.date), date));
+  },
+  setSchedules: (schedules: Schedule[]) =>
+    set(() => ({
+      schedules: schedules,
+    })),
 }));
 
 export default useScheduleStore;

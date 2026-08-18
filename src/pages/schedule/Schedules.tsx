@@ -1,48 +1,31 @@
-import { findAddress } from "@/api/cep";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
-import { formatDateToString } from "@/helpers/date";
 import {
+  addDays,
   addMonths,
   eachDayOfInterval,
-  endOfMonth,
-  getDay,
   startOfMonth,
+  subDays,
   subMonths,
 } from "date-fns";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
+import AddEditSchedule from "./AddEditSchedule";
+import useScheduleStore from "@/store/scheduleStore";
+import { getSafeDate } from "@/helpers/date";
+import useProfessionalStore from "@/store/professionalStore";
 
 const getDaysOfTheMonth = (date: Date): Date[] => {
   const firstDay = startOfMonth(date);
-  const endDay = endOfMonth(date);
-  const dayOfTheWeekMonthStarts = getDay(firstDay);
-  const dayOfTheWeekMonthEnds = getDay(endDay);
-  const qntDaysOfNextMonth = 6 - dayOfTheWeekMonthEnds;
 
-  const previousMonth = eachDayOfInterval({
-    start: startOfMonth(subMonths(date, 1)),
-    end: endOfMonth(subMonths(date, 1)),
+  const calendarStart = subDays(firstDay, firstDay.getDay());
+
+  const calendarEnd = addDays(calendarStart, 41);
+
+  return eachDayOfInterval({
+    start: calendarStart,
+    end: calendarEnd,
   });
-
-  const currentMonth = eachDayOfInterval({
-    start: startOfMonth(date),
-    end: endOfMonth(date),
-  });
-
-  const nextMonth = eachDayOfInterval({
-    start: startOfMonth(addMonths(date, 1)),
-    end: endOfMonth(addMonths(date, 1)),
-  });
-
-  const daysOfPreviousMonth = previousMonth.slice(
-    previousMonth.length - dayOfTheWeekMonthStarts,
-    previousMonth.length,
-  );
-
-  const daysOfNextMonth = nextMonth.slice(0, qntDaysOfNextMonth);
-
-  return daysOfPreviousMonth.concat(currentMonth).concat(daysOfNextMonth);
 };
 
 enum SchedulesView {
@@ -52,17 +35,15 @@ enum SchedulesView {
 }
 
 const Schedules = () => {
-  const [currentDate, setCurrentDate] = useState<Date>(new Date());
+  const { getSchedulesByDate } = useScheduleStore();
+  const { getProfessional } = useProfessionalStore();
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [currentDate, setCurrentDate] = useState<Date>(getSafeDate(new Date()));
   const [editDateMode, setEditDateMode] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState<SchedulesView>(
     SchedulesView.MONTHLY,
   );
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const street = useRef<HTMLInputElement>(null);
-  const neighborhood = useRef<HTMLInputElement>(null);
-  const additionalInfo = useRef<HTMLInputElement>(null);
-  const city = useRef<HTMLInputElement>(null);
 
   const handleEditMode = () => {
     setEditDateMode((prev) => !prev);
@@ -70,19 +51,28 @@ const Schedules = () => {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.currentTarget.value;
-    setCurrentDate(new Date(date));
+    setCurrentDate(getSafeDate(new Date(date)));
     setEditDateMode(false);
   };
 
-  const handleCEP = async (CEP: string) => {
-    const res = await findAddress(CEP);
-
-    if (res.logradouro && street.current) street.current.value = res.logradouro;
-    if (res.bairro && neighborhood.current)
-      neighborhood.current.value = res.bairro;
-    if (res.localidade && city.current) city.current.value = res.localidade;
-    if (res.complemento && additionalInfo.current)
-      additionalInfo.current.value = res.complemento;
+  const Dates = ({ date }: { date: Date }) => {
+    return getSchedulesByDate(getSafeDate(date)).map((s) => (
+      <div
+        className="d-flex flex-column bg-secondary rounded text-light p-2"
+        key={s.id}
+      >
+        <div className="d-flex gap-2 align-items-center">
+          <span className="fs-6">Paciente</span>
+          <span className="fw-bold">{s.patient.fullName}</span>
+        </div>
+        <div className="d-flex gap-2 align-items-center">
+          <span className="fs-6">Profissional</span>
+          <span className="fw-bold">
+            {getProfessional(s.professional)?.fullName}
+          </span>
+        </div>
+      </div>
+    ));
   };
 
   return (
@@ -99,7 +89,7 @@ const Schedules = () => {
             </button>
             {!editDateMode && (
               <span onClick={handleEditMode}>
-                Agenda {currentDate.getMonth()}/{currentDate.getFullYear()}
+                Agenda {currentDate.getMonth() + 1}/{currentDate.getFullYear()}
               </span>
             )}
             {editDateMode && (
@@ -158,7 +148,8 @@ const Schedules = () => {
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
             >
-              {currentDate.getDate()}
+              {currentDate.getDate()}/{currentDate.getMonth() + 1}
+              <Dates date={currentDate} />
             </div>
           )}
           {currentView === SchedulesView.MONTHLY &&
@@ -172,126 +163,18 @@ const Schedules = () => {
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
               >
-                {d.getDate()}
+                {d.getDate()}/{d.getMonth() + 1}
+                <Dates date={d} />
               </div>
             ))}
         </div>
       </div>
       {modalOpen &&
         createPortal(
-          <>
-            <div
-              className="modal-backdrop fade show"
-              onClick={() => setModalOpen(false)}
-            />
-            <div
-              className="modal fade show d-block"
-              tabIndex={-1}
-              role="dialog"
-            >
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title">
-                      Agendar para dia {formatDateToString(selectedDate)}
-                    </h5>
-
-                    <button
-                      type="button"
-                      className="btn-close"
-                      onClick={() => setModalOpen(false)}
-                    />
-                  </div>
-
-                  <div className="modal-body">
-                    <form className="d-flex flex-column gap-2">
-                      <div className="d-flex flex-column gap-2">
-                        <h5>Dados do paciente</h5>
-                        <input
-                          className="form-control"
-                          placeholder="Nome completo"
-                        ></input>
-                        <input
-                          className="form-control"
-                          placeholder="CPF"
-                          maxLength={11}
-                        ></input>
-                        <input className="form-control" type="date"></input>
-                        <div className="d-flex flex-column gap-2">
-                          <input
-                            className="form-control"
-                            placeholder="CEP"
-                            maxLength={8}
-                            onBlur={(e) => handleCEP(e.currentTarget.value)}
-                          />
-                          <div className="d-flex gap-2">
-                            <input
-                              className="form-control flex-fill"
-                              placeholder="Rua"
-                              ref={street}
-                            />
-                            <input
-                              className="form-control"
-                              placeholder="Número"
-                              type="number"
-                            />
-                          </div>
-                          <input
-                            className="form-control"
-                            placeholder="Complemento"
-                            ref={additionalInfo}
-                          />
-                          <div className="d-flex gap-2">
-                            <input
-                              className="form-control"
-                              placeholder="Bairro"
-                              ref={neighborhood}
-                            />
-                            <input
-                              className="form-control"
-                              placeholder="Cidade"
-                              ref={city}
-                            />
-                          </div>
-                        </div>
-                        <textarea
-                          className="form-control"
-                          placeholder="Queixa do paciente"
-                        ></textarea>
-                      </div>
-                      <div className="d-flex flex-column gap-2">
-                        <h5>Dados da pessoa profissional</h5>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                        >
-                          <option selected>Open this select menu</option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                      </div>
-                      <div className="d-flex flex-column gap-2">
-                        <h5>Dados do pagamento</h5>
-                        <select
-                          className="form-select"
-                          aria-label="Default select example"
-                        >
-                          <option selected>Escolha forma de pagamento</option>
-                          <option value="1">Cartão de crédito</option>
-                          <option value="2">Pix</option>
-                          <option value="3">Dinheiro</option>
-                        </select>
-                      </div>
-                      <button className="btn btn-light" type="submit">
-                        Agendar
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </>,
+          <AddEditSchedule
+            handleModalOpen={setModalOpen}
+            selectedDate={selectedDate}
+          />,
           document.getElementById("root")!,
         )}
     </>

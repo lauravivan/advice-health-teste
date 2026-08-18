@@ -1,20 +1,23 @@
 export interface Schedule {
+  id: string;
   professional: string;
-  pacient: {
+  date: string;
+  patient: {
     fullName: string;
     cpf: string;
-    birthDate: Date;
+    birthDate: string;
     address: {
       street: string;
-      number: number;
+      number: string;
       cep: string;
-      additionalInfo: string;
+      additionalInfo: string | null;
       neighborhood: string;
       city: string;
     };
     additionalInfo: string;
   };
   paymentInfo: {
-    method: 'PIX' | 'CREDIT-CARD' | 'MONEY'
+    method: "PIX" | "CREDIT-CARD" | "MONEY";
+    installments?: number;
   };
 }

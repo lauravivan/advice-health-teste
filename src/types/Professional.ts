@@ -1,11 +1,10 @@
 interface ConsultationInfo {
   price: string;
-  available_times: string[];
 }
 
 export interface Professional {
   id: string;
-  name: string;
+  fullName: string;
   crm: string;
   specialty: string;
   consultation_info?: ConsultationInfo;
