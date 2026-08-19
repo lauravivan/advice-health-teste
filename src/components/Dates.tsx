@@ -1,4 +1,4 @@
-import { getSafeDate } from "@/helpers/date";
+import { formatDateToString, getSafeDate } from "@/helpers/date";
 import useProfessionalStore from "@/store/professionalStore";
 import useScheduleStore from "@/store/scheduleStore";
 import CheckIcon from "./icons/Check";
@@ -64,6 +64,12 @@ const Dates = ({ date }: { date: Date }) => {
                       <span className="fs-6">Profissional</span>
                       <span className="fw-bold">
                         {getProfessional(s.professional)?.fullName}
+                      </span>
+                    </div>
+                    <div className="d-flex gap-2">
+                      <span className="fs-6">Hora da consulta</span>
+                      <span className="fw-bold">
+                        {formatDateToString(new Date(s.date)).time}
                       </span>
                     </div>
                   </div>

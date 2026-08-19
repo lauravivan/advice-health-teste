@@ -29,7 +29,7 @@ const AddEditSchedule = ({
     resolver: zodResolver(scheduleSchema),
     defaultValues: editMode
       ? {
-          date: formatDateToString(selectedDate),
+          date: formatDateToString(selectedDate).fullDate,
 
           professional: schedule?.professional,
 
@@ -55,7 +55,9 @@ const AddEditSchedule = ({
             // installments: schedule?.paymentInfo.installments,
           },
         }
-      : {},
+      : {
+          date: formatDateToString(selectedDate).fullDate,
+        },
   });
 
   const handleCEP = async (CEP: string) => {
@@ -94,7 +96,7 @@ const AddEditSchedule = ({
               <h5 className="modal-title">
                 {editMode
                   ? `Editar agendamento`
-                  : `Agendar para dia ${formatDateToString(selectedDate)}`}
+                  : `Agendar para dia ${formatDateToString(selectedDate).day}`}
               </h5>
 
               <button
@@ -109,6 +111,22 @@ const AddEditSchedule = ({
                 className="d-flex flex-column gap-2 has-validation"
                 onSubmit={handleSubmit(onSubmit)}
               >
+                <div className="d-flex flex-column gap-2">
+                  <h5>Dados do agendamento</h5>
+                  <div className="input-group has-validation">
+                    <input
+                      className="form-control"
+                      id="schedule-datetime"
+                      type="datetime-local"
+                      {...register("date")}
+                    />
+                    {errors.date?.message && (
+                      <div className="invalid-feedback">
+                        {errors.date.message}
+                      </div>
+                    )}
+                  </div>
+                </div>
                 <div className="d-flex flex-column gap-2">
                   <h5>Dados do paciente</h5>
                   <div className="input-group has-validation">

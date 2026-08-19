@@ -1,8 +1,13 @@
-export const formatDateToString = (date: Date | null | undefined) => {
-  if (!date) return `0/0/0000`;
-  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-};
+import { format } from "date-fns";
 
+export const formatDateToString = (date: Date | null | undefined) => {
+  const dateFormatted = format(date ?? new Date(), "dd/MM/yyyy HH:mm");
+  return {
+    fullDate: dateFormatted,
+    day: dateFormatted.substring(0, 10),
+    time: dateFormatted.substring(10, 16),
+  };
+};
 
 export const getSafeDate = (date: Date) => {
   const validDate = new Date(date);
@@ -18,9 +23,9 @@ export const getSafeDate = (date: Date) => {
     ? new Date(
         validDate.getUTCFullYear(),
         validDate.getUTCMonth(),
-        validDate.getUTCDate()
+        validDate.getUTCDate(),
       )
     : validDate;
 
   return safeDate;
-}
+};

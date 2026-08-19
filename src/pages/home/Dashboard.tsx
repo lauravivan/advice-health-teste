@@ -43,7 +43,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex-fill">
-        <h2>Agenda do dia {formatDateToString(currentDate)}</h2>
+        <h2>Agenda do dia {formatDateToString(currentDate).day}</h2>
         <div className="bg-light p-1 rounded d-flex flex-column gap-2 overflow-auto">
           <Dates date={currentDate} />
         </div>
