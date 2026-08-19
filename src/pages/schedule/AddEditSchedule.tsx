@@ -158,7 +158,7 @@ const AddEditSchedule = ({
                   <div className="input-group has-validation">
                     <select
                       className={`form-control ${errors.professional ? 'is-invalid' : ''}`}
-                      aria-label="Default select example"
+                      aria-label="Selecionar profissional"
                       id="professional"
                       {...register('professional')}
                     >

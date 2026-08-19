@@ -38,3 +38,7 @@ export const scheduleSchema = z.object({
 });
 
 export type ScheduleSchema = z.infer<typeof scheduleSchema>;
+
+export const patchScheduleSchema = scheduleSchema.partial();
+
+export type PatchScheduleSchema = z.infer<typeof patchScheduleSchema>;

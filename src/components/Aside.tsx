@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import CalendarIcon from './icons/Calendar';
 import PersonIcon from './icons/Person';
 import HomeIcon from './icons/Home';
+import navigation from '@/navigation';
 
 const AsideIconItem = ({ children }: { children: React.ReactNode }) => {
   return <li className="bg-secondary:hover p-1">{children}</li>;
@@ -17,12 +18,15 @@ const Aside = () => {
           </Link>
         </AsideIconItem>
         <AsideIconItem>
-          <Link title="Profissionais" to="/profissionais">
+          <Link
+            title="Profissionais"
+            to={navigation.navigateToProfessionals.home()}
+          >
             <PersonIcon />
           </Link>
         </AsideIconItem>
         <AsideIconItem>
-          <Link title="Agendamentos" to="/schedules">
+          <Link title="Agendamentos" to={navigation.navigateToSchedules.home()}>
             <CalendarIcon />
           </Link>
         </AsideIconItem>

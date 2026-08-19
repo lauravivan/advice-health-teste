@@ -46,8 +46,14 @@ function App() {
           <div className="d-flex p-3 w-100 h-100">
             <Routes>
               <Route path="/" element={<Dashboard />} />
-              <Route path="/profissionais" element={<Professionals />} />
-              <Route path="/schedules" element={<Schedules />} />
+              <Route
+                path={navigation.navigateToProfessionals.home().pathname}
+                element={<Professionals />}
+              />
+              <Route
+                path={navigation.navigateToSchedules.home().pathname}
+                element={<Schedules />}
+              />
               <Route
                 path={navigation.navigateToProfessionals.register().pathname}
                 element={<AddEditProfessional />}

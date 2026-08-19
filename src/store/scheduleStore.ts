@@ -21,6 +21,7 @@ interface ScheduleStoreState {
   ) => void;
   setSchedules: (schedules: Schedule[]) => void;
   updateSchedule: (id: string, schedule: Schedule) => void;
+  patchSchedule: (id: string, schedule: Partial<Schedule>) => void;
 }
 
 const useScheduleStore = create<ScheduleStoreState>((set) => ({
@@ -52,6 +53,25 @@ const useScheduleStore = create<ScheduleStoreState>((set) => ({
   updateSchedule: (id: string, schedule: Schedule) => {
     set((state) => {
       const schs = state.schedules.map((s) => (s.id === id ? schedule : s));
+
+      storeSchedules(schs);
+
+      return {
+        ...state,
+        schedules: schs,
+      };
+    });
+  },
+  patchSchedule: (id: string, schedule: Partial<Schedule>) => {
+    set((state) => {
+      const schs = state.schedules.map((s) =>
+        s.id === id
+          ? {
+              ...s,
+              ...schedule,
+            }
+          : s
+      );
 
       storeSchedules(schs);
 

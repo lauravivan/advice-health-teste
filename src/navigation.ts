@@ -1,8 +1,8 @@
-const Restrictions = {
-  RequiresAuth: "RequiresAuth",
+export const Restrictions = {
+  RequiresAuth: 'RequiresAuth',
 } as const;
 
-type RestrictionsEnum = typeof Restrictions[keyof typeof Restrictions];
+type RestrictionsEnum = (typeof Restrictions)[keyof typeof Restrictions];
 
 interface RouteConfig {
   pathname: string;
@@ -13,7 +13,10 @@ interface RouteConfig {
 
 export default {
   navigateToProfessionals: {
-    home: (): RouteConfig => ({ pathname: "/profissionais" }),
-    register: (): RouteConfig => ({ pathname: "/profissionais/cadastrar" }),
+    home: (): RouteConfig => ({ pathname: '/profissionais' }),
+    register: (): RouteConfig => ({ pathname: '/profissionais/cadastrar' }),
+  },
+  navigateToSchedules: {
+    home: (): RouteConfig => ({ pathname: '/agendamentos' }),
   },
 } as const;

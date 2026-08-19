@@ -97,3 +97,9 @@ Illustration collection: [unDraw](https://undraw.co/search/doctor)
 - Edição do cadastro de profissional
 - Paginação na tela de profissionais
 - Busca de profissionais e agendamentos
+- Transferência de agendamento levando em consideração dia e horário
+- Indisponibilidade de horário da pessoa profissional
+
+--
+
+Feito com ❤️ por Laura
