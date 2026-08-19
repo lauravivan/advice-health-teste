@@ -1,6 +1,8 @@
-enum RestrictionsEnum {
-  RequiresAuth = "RequiresAuth",
-}
+const Restrictions = {
+  RequiresAuth: "RequiresAuth",
+} as const;
+
+type RestrictionsEnum = typeof Restrictions[keyof typeof Restrictions];
 
 interface RouteConfig {
   pathname: string;
