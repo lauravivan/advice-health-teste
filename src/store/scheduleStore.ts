@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { v7 as uuidv7 } from "uuid";
 import type { Schedule } from "@/types/Schedule";
 import { isSameDay } from "date-fns";
-import { getSafeDate } from "@/helpers/date";
+import { SCHEDULE_STATUS } from "@/constants/schedule";
 
 const LS_KEY = "advice-health-schedules";
 
@@ -17,20 +17,27 @@ export function storeSchedules(schedules: Schedule[]) {
 
 interface ScheduleStoreState {
   schedules: Schedule[];
-  createSchedule: (newSchedule: Omit<Schedule, "id">) => void;
+  createSchedule: (
+    newSchedule: Omit<Schedule, "id" | "transferred" | "status">,
+  ) => void;
   getSchedulesByDate: (date: Date) => Schedule[];
   setSchedules: (schedules: Schedule[]) => void;
+  getDailyTotalSchedules: () => number;
 }
 
 const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
   schedules: [],
-  createSchedule: (newSchedule: Omit<Schedule, "id">) =>
+  createSchedule: (
+    newSchedule: Omit<Schedule, "id" | "transferred" | "status">,
+  ) =>
     set((state) => {
       const schedules = [...state.schedules];
 
       schedules.push({
         ...newSchedule,
         id: uuidv7(),
+        status: SCHEDULE_STATUS[2],
+        transferred: false
       });
 
       storeSchedules(schedules);
@@ -40,13 +47,17 @@ const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
         schedules,
       };
     }),
-  getSchedulesByDate: (date: Date) => {
-    return get().schedules.filter((s) => isSameDay(new Date(s.date), date));
-  },
+  getSchedulesByDate: (date: Date) =>
+    get().schedules.filter((s) => isSameDay(new Date(s.date), date)),
   setSchedules: (schedules: Schedule[]) =>
     set(() => ({
       schedules: schedules,
     })),
+  getDailyTotalSchedules: () => {
+    const date = new Date();
+    const schedules = get().getSchedulesByDate(date);
+    return schedules.length;
+  },
 }));
 
 export default useScheduleStore;

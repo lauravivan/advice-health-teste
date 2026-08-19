@@ -1,0 +1,271 @@
+[
+  {
+    "id": "1",
+    "professional": "1",
+    "date": "2026-08-19T09:00:00",
+    "status": "ATTENDED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Carlos Eduardo Silva",
+      "cpf": "123.456.789-01",
+      "birthDate": "1987-03-14",
+      "address": {
+        "street": "Rua das Flores",
+        "number": "245",
+        "cep": "80020-120",
+        "additionalInfo": null,
+        "neighborhood": "Centro",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Paciente com histórico familiar de hipertensão."
+    },
+    "paymentInfo": {
+      "method": "PIX"
+    }
+  },
+  {
+    "id": "2",
+    "professional": "2",
+    "date": "2026-08-19T10:30:00",
+    "status": "ATTENDED",
+    "transferred": true,
+    "patient": {
+      "fullName": "Ana Paula Mendes",
+      "cpf": "234.567.890-12",
+      "birthDate": "1994-07-22",
+      "address": {
+        "street": "Rua João Negrão",
+        "number": "812",
+        "cep": "80010-200",
+        "additionalInfo": "Apartamento 304",
+        "neighborhood": "Rebouças",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Primeira consulta dermatológica."
+    },
+    "paymentInfo": {
+      "method": "CREDIT-CARD",
+      "installments": 2
+    }
+  },
+  {
+    "id": "3",
+    "professional": "3",
+    "date": "2026-08-20T08:30:00",
+    "status": "CANCELED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Marcos Vinícius Rocha",
+      "cpf": "345.678.901-23",
+      "birthDate": "2016-11-05",
+      "address": {
+        "street": "Rua Marechal Deodoro",
+        "number": "1540",
+        "cep": "80060-010",
+        "additionalInfo": null,
+        "neighborhood": "Alto da Rua XV",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Acompanhado pela mãe."
+    },
+    "paymentInfo": {
+      "method": "MONEY"
+    }
+  },
+  {
+    "id": "4",
+    "professional": "4",
+    "date": "2026-08-20T14:00:00",
+    "status": "ATTENDED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Fernanda Oliveira Costa",
+      "cpf": "456.789.012-34",
+      "birthDate": "1979-02-18",
+      "address": {
+        "street": "Avenida República Argentina",
+        "number": "672",
+        "cep": "80620-010",
+        "additionalInfo": "Sala 12",
+        "neighborhood": "Água Verde",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Queixa de dor recorrente no joelho direito."
+    },
+    "paymentInfo": {
+      "method": "CREDIT-CARD",
+      "installments": 3
+    }
+  },
+  {
+    "id": "5",
+    "professional": "5",
+    "date": "2026-08-21T09:30:00",
+    "status": "SCHEDULED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Ricardo Almeida Santos",
+      "cpf": "567.890.123-45",
+      "birthDate": "1982-09-30",
+      "address": {
+        "street": "Rua Padre Anchieta",
+        "number": "320",
+        "cep": "80730-000",
+        "additionalInfo": null,
+        "neighborhood": "Bigorrilho",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Em acompanhamento para controle hormonal."
+    },
+    "paymentInfo": {
+      "method": "PIX"
+    }
+  },
+  {
+    "id": "6",
+    "professional": "6",
+    "date": "2026-08-21T15:30:00",
+    "status": "SCHEDULED",
+    "transferred": true,
+    "patient": {
+      "fullName": "Juliana Martins Pereira",
+      "cpf": "678.901.234-56",
+      "birthDate": "1990-12-11",
+      "address": {
+        "street": "Rua Itupava",
+        "number": "935",
+        "cep": "80040-000",
+        "additionalInfo": "Fundos",
+        "neighborhood": "Hugo Lange",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Relata episódios frequentes de enxaqueca."
+    },
+    "paymentInfo": {
+      "method": "CREDIT-CARD",
+      "installments": 4
+    }
+  },
+  {
+    "id": "7",
+    "professional": "7",
+    "date": "2026-08-22T10:00:00",
+    "status": "CANCELED",
+    "transferred": true,
+    "patient": {
+      "fullName": "Camila Ferreira Lima",
+      "cpf": "789.012.345-67",
+      "birthDate": "1996-05-27",
+      "address": {
+        "street": "Rua Desembargador Westphalen",
+        "number": "1188",
+        "cep": "80230-100",
+        "additionalInfo": null,
+        "neighborhood": "Rebouças",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Consulta de rotina."
+    },
+    "paymentInfo": {
+      "method": "PIX"
+    }
+  },
+  {
+    "id": "8",
+    "professional": "8",
+    "date": "2026-08-24T16:00:00",
+    "status": "SCHEDULED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Daniel Henrique Souza",
+      "cpf": "890.123.456-78",
+      "birthDate": "1988-03-09",
+      "address": {
+        "street": "Rua Visconde de Nácar",
+        "number": "455",
+        "cep": "80410-200",
+        "additionalInfo": "Apartamento 701",
+        "neighborhood": "Centro",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Retorno para acompanhamento."
+    },
+    "paymentInfo": {
+      "method": "CREDIT-CARD",
+      "installments": 2
+    }
+  },
+  {
+    "id": "9",
+    "professional": "9",
+    "date": "2026-08-25T11:00:00",
+    "status": "ATTENDED",
+    "transferred": true,
+    "patient": {
+      "fullName": "Beatriz Cristina Alves",
+      "cpf": "901.234.567-89",
+      "birthDate": "1972-10-16",
+      "address": {
+        "street": "Avenida Sete de Setembro",
+        "number": "2105",
+        "cep": "80230-010",
+        "additionalInfo": null,
+        "neighborhood": "Centro",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Consulta para avaliação oftalmológica."
+    },
+    "paymentInfo": {
+      "method": "MONEY"
+    }
+  },
+  {
+    "id": "10",
+    "professional": "10",
+    "date": "2026-08-26T13:30:00",
+    "status": "SCHEDULED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Gustavo Henrique Martins",
+      "cpf": "012.345.678-90",
+      "birthDate": "1985-06-24",
+      "address": {
+        "street": "Rua XV de Novembro",
+        "number": "890",
+        "cep": "80020-310",
+        "additionalInfo": "Conjunto 405",
+        "neighborhood": "Centro",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Consulta para avaliação urológica."
+    },
+    "paymentInfo": {
+      "method": "PIX"
+    }
+  },
+  {
+    "id": "11",
+    "professional": "11",
+    "date": "2026-08-27T08:00:00",
+    "status": "CANCELED",
+    "transferred": false,
+    "patient": {
+      "fullName": "Larissa Fernanda Gomes",
+      "cpf": "112.233.445-56",
+      "birthDate": "2001-01-19",
+      "address": {
+        "street": "Rua Brigadeiro Franco",
+        "number": "1420",
+        "cep": "80420-200",
+        "additionalInfo": null,
+        "neighborhood": "Centro",
+        "city": "Curitiba"
+      },
+      "additionalInfo": "Consulta de rotina."
+    },
+    "paymentInfo": {
+      "method": "CREDIT-CARD",
+      "installments": 2
+    }
+  }
+]

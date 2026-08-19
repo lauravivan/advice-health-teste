@@ -3,15 +3,20 @@ import { formatDateToString } from "@/helpers/date";
 import { scheduleSchema, type ScheduleSchema } from "@/schemas/schedule.schema";
 import useProfessionalStore from "@/store/professionalStore";
 import useScheduleStore from "@/store/scheduleStore";
+import type { Schedule } from "@/types/Schedule";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 const AddEditSchedule = ({
   handleModalOpen,
   selectedDate,
+  editMode = false,
+  schedule,
 }: {
   handleModalOpen: (open: boolean) => void;
-  selectedDate: Date | undefined;
+  selectedDate?: Date;
+  schedule?: Schedule;
+  editMode?: boolean;
 }) => {
   const { getPaginatedProfessionals } = useProfessionalStore();
   const { createSchedule } = useScheduleStore();
@@ -22,14 +27,35 @@ const AddEditSchedule = ({
     setValue,
   } = useForm<ScheduleSchema>({
     resolver: zodResolver(scheduleSchema),
-    defaultValues: {
-      date: formatDateToString(selectedDate),
-      patient: {
-        address: {
-          number: "0",
-        },
-      },
-    },
+    defaultValues: editMode
+      ? {
+          date: formatDateToString(selectedDate),
+
+          professional: schedule?.professional,
+
+          patient: {
+            fullName: schedule?.patient.fullName,
+            cpf: schedule?.patient.cpf,
+            birthDate: schedule?.patient.birthDate,
+
+            address: {
+              street: schedule?.patient.address.street,
+              number: schedule?.patient.address.number,
+              cep: schedule?.patient.address.cep,
+              additionalInfo: schedule?.patient.address.additionalInfo,
+              neighborhood: schedule?.patient.address.neighborhood,
+              city: schedule?.patient.address.city,
+            },
+
+            additionalInfo: schedule?.patient.additionalInfo,
+          },
+
+          paymentInfo: {
+            method: "PIX",
+            // installments: schedule?.paymentInfo.installments,
+          },
+        }
+      : {},
   });
 
   const handleCEP = async (CEP: string) => {
@@ -44,14 +70,14 @@ const AddEditSchedule = ({
 
   const onSubmit = (data: ScheduleSchema) => {
     createSchedule({
-      date: selectedDate?.toString() ?? '0000/00/00',
+      date: selectedDate?.toString() ?? "0000/00/00",
       professional: data.professional,
       patient: data.patient,
       paymentInfo: data.paymentInfo,
     });
 
     setTimeout(() => {
-      handleModalOpen(false)
+      handleModalOpen(false);
     }, 1000);
   };
 
@@ -66,7 +92,9 @@ const AddEditSchedule = ({
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">
-                Agendar para dia {formatDateToString(selectedDate)}
+                {editMode
+                  ? `Editar agendamento`
+                  : `Agendar para dia ${formatDateToString(selectedDate)}`}
               </h5>
 
               <button
@@ -275,7 +303,7 @@ const AddEditSchedule = ({
                   </div>
                 </div>
                 <button className="btn btn-light" type="submit">
-                  Agendar
+                  {editMode ? "Editar agendamento" : "Agendar"}
                 </button>
               </form>
             </div>

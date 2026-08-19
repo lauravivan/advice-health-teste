@@ -9,4 +9,5 @@ export interface Professional {
   specialty: string;
   consultation_info?: ConsultationInfo;
   payment_options?: string[];
+  acceptsInsurance: boolean;
 }

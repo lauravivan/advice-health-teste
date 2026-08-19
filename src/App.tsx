@@ -10,22 +10,23 @@ import navigation from "./navigation";
 import useProfessionalStore, { getStoredPros } from "./store/professionalStore";
 import { useEffect } from "react";
 import useScheduleStore, { getStoredSchedules } from "./store/scheduleStore";
+import professionals from "@/db/professionals.json";
+import schedules from "@/db/schedules.json";
 
 function App() {
   const { setProfessionals } = useProfessionalStore();
   const { setSchedules } = useScheduleStore();
-  
+
   useEffect(() => {
     const pros = getStoredPros();
-    setProfessionals(pros);
+    setProfessionals([...professionals, ...pros]);
   }, []);
 
-  
   useEffect(() => {
-    const schedules = getStoredSchedules();
-    setSchedules(schedules);
+    const schs = getStoredSchedules();
+    setSchedules([...schedules, ...schs]);
   }, []);
-  
+
   return (
     <BrowserRouter>
       <main className="d-flex w-100 h-100">
@@ -37,10 +38,13 @@ function App() {
               <Route path="/" element={<Dashboard />} />
               <Route path="/profissionais" element={<Professionals />} />
               <Route path="/schedules" element={<Schedules />} />
-              <Route path={navigation.navigateToProfessionals.register().pathname} element={<AddEditProfessional />} />
+              <Route
+                path={navigation.navigateToProfessionals.register().pathname}
+                element={<AddEditProfessional />}
+              />
             </Routes>
           </div>
-          <Footer />  
+          <Footer />
         </div>
       </main>
     </BrowserRouter>

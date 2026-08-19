@@ -1,0 +1,119 @@
+[
+  {
+    "id": "1",
+    "fullName": "Mariana Alves",
+    "crm": "CRM-SP 184521",
+    "specialty": "Cardiologia",
+    "consultation_info": {
+      "price": "350.00"
+    },
+    "payment_options": ["PIX", "CREDIT-CARD"],
+    "acceptsInsurance": true
+  },
+  {
+    "id": "2",
+    "fullName": "Rafael Martins",
+    "crm": "CRM-SP 217843",
+    "specialty": "Dermatologia",
+    "consultation_info": {
+      "price": "280.00"
+    },
+    "payment_options": ["PIX", "MONEY"],
+    "acceptsInsurance": false
+  },
+  {
+    "id": "3",
+    "fullName": "Camila Rodrigues",
+    "crm": "CRM-RJ 163729",
+    "specialty": "Pediatria",
+    "consultation_info": {
+      "price": "250.00"
+    },
+    "payment_options": ["PIX", "CREDIT-CARD", "MONEY"],
+    "acceptsInsurance": true
+  },
+  {
+    "id": "4",
+    "fullName": "Lucas Ferreira",
+    "crm": "CRM-PR 198374",
+    "specialty": "Ortopedia",
+    "consultation_info": {
+      "price": "320.00"
+    },
+    "payment_options": ["CREDIT-CARD"],
+    "acceptsInsurance": false
+  },
+  {
+    "id": "5",
+    "fullName": "Juliana Costa",
+    "crm": "CRM-SC 145682",
+    "specialty": "Endocrinologia",
+    "consultation_info": {
+      "price": "300.00"
+    },
+    "payment_options": ["PIX", "CREDIT-CARD"],
+    "acceptsInsurance": true
+  },
+  {
+    "id": "6",
+    "fullName": "Bruno Oliveira",
+    "crm": "CRM-MG 231567",
+    "specialty": "Neurologia",
+    "consultation_info": {
+      "price": "380.00"
+    },
+    "payment_options": ["PIX", "MONEY"],
+    "acceptsInsurance": false
+  },
+  {
+    "id": "7",
+    "fullName": "Fernanda Souza",
+    "crm": "CRM-BA 176945",
+    "specialty": "Ginecologia",
+    "consultation_info": {
+      "price": "290.00"
+    },
+    "payment_options": ["PIX", "CREDIT-CARD", "MONEY"],
+    "acceptsInsurance": true
+  },
+  {
+    "id": "8",
+    "fullName": "Gabriel Mendes",
+    "crm": "CRM-RS 209318",
+    "specialty": "Psiquiatria",
+    "consultation_info": {
+      "price": "330.00"
+    },
+    "payment_options": ["CREDIT-CARD", "MONEY"],
+    "acceptsInsurance": false
+  },
+  {
+    "id": "9",
+    "fullName": "Patrícia Lima",
+    "crm": "CRM-PE 154827",
+    "specialty": "Oftalmologia",
+    "consultation_info": {
+      "price": "270.00"
+    },
+    "payment_options": ["PIX"],
+    "acceptsInsurance": true
+  },
+  {
+    "id": "10",
+    "fullName": "André Carvalho",
+    "crm": "CRM-PR 187634",
+    "specialty": "Urologia",
+    "consultation_info": {
+      "price": "310.00"
+    },
+    "payment_options": ["PIX", "CREDIT-CARD"],
+    "acceptsInsurance": false
+  },
+  {
+    "id": "11",
+    "fullName": "Beatriz Nascimento",
+    "crm": "CRM-SP 224791",
+    "specialty": "Clínica Geral",
+    "acceptsInsurance": true
+  }
+]

@@ -9,8 +9,6 @@ import {
   subMonths,
 } from "date-fns";
 import { useState } from "react";
-import { createPortal } from "react-dom";
-import AddEditSchedule from "./AddEditSchedule";
 import { getSafeDate } from "@/helpers/date";
 import Dates from "@/components/Dates";
 
@@ -34,11 +32,8 @@ enum SchedulesView {
 }
 
 const Schedules = () => {
-
-  const [selectedDate, setSelectedDate] = useState<Date>();
   const [currentDate, setCurrentDate] = useState<Date>(getSafeDate(new Date()));
   const [editDateMode, setEditDateMode] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
   const [currentView, setCurrentView] = useState<SchedulesView>(
     SchedulesView.MONTHLY,
   );
@@ -116,45 +111,11 @@ const Schedules = () => {
           </ul>
         </div>
         <div className="d-flex flex-column w-100 h-100 rounded overflow-auto">
-          {currentView === SchedulesView.DAILY && (
-            <div
-              onClick={() => {
-                setModalOpen(true);
-                setSelectedDate(currentDate);
-              }}
-              className="bg-light h-100 p-3 m-1 rounded"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-            >
-              {currentDate.getDate()}/{currentDate.getMonth() + 1}
-              <Dates date={currentDate} />
-            </div>
-          )}
+          {currentView === SchedulesView.DAILY && <Dates date={currentDate} />}
           {currentView === SchedulesView.MONTHLY &&
-            getDaysOfTheMonth(currentDate).map((d) => (
-              <div
-                onClick={() => {
-                  setModalOpen(true);
-                  setSelectedDate(d);
-                }}
-                className="bg-light p-3 m-1 rounded"
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal"
-              >
-                {d.getDate()}/{d.getMonth() + 1}
-                <Dates date={d} />
-              </div>
-            ))}
+            getDaysOfTheMonth(currentDate).map((d) => <Dates date={d} />)}
         </div>
       </div>
-      {modalOpen &&
-        createPortal(
-          <AddEditSchedule
-            handleModalOpen={setModalOpen}
-            selectedDate={selectedDate}
-          />,
-          document.getElementById("root")!,
-        )}
     </>
   );
 };

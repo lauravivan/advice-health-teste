@@ -17,7 +17,9 @@ export interface Schedule {
     additionalInfo: string;
   };
   paymentInfo: {
-    method: "PIX" | "CREDIT-CARD" | "MONEY";
+    method: string;
     installments?: number;
   };
+  status: string;
+  transferred: boolean;
 }
