@@ -1,11 +1,13 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 export const formatDateToString = (date: Date | null | undefined) => {
-  const dateFormatted = format(date ?? new Date(), "dd/MM/yyyy HH:mm");
+  const dateFormatted = format(date ?? new Date(), "yyyy-MM-dd'T'HH:mm");
   return {
     fullDate: dateFormatted,
     day: dateFormatted.substring(0, 10),
     time: dateFormatted.substring(10, 16),
+    normalizedDay: `${dateFormatted.substring(5, 7)}/${dateFormatted.substring(8, 10)}/${dateFormatted.substring(0, 4)}`,
+    normalizedTime: `${dateFormatted.substring(11, 16)}`,
   };
 };
 
@@ -23,7 +25,7 @@ export const getSafeDate = (date: Date) => {
     ? new Date(
         validDate.getUTCFullYear(),
         validDate.getUTCMonth(),
-        validDate.getUTCDate(),
+        validDate.getUTCDate()
       )
     : validDate;
 

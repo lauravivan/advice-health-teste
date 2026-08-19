@@ -84,7 +84,7 @@ const Schedules = ({ date }: { date: Date }) => {
                       <div className="d-flex gap-2">
                         <span className="fs-6">Hora da consulta</span>
                         <span className="fw-bold">
-                          {formatDateToString(new Date(s.date)).time}
+                          {formatDateToString(new Date(s.date)).normalizedTime}
                         </span>
                       </div>
                     </div>

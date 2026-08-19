@@ -54,7 +54,7 @@ const Dashboard = () => {
       (s) => s.status === ScheduleStatus.ATTENDED
     );
     return schedulesAttended.reduce((acc, current) => {
-      return acc + parseFloat(current.price);
+      return acc + parseInt(current.price);
     }, 0);
   };
 
@@ -77,7 +77,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex-fill">
-        <h2>Agenda do dia {formatDateToString(currentDate).day}</h2>
+        <h2>Agenda do dia {formatDateToString(currentDate).normalizedDay}</h2>
         <div className="bg-light p-1 rounded d-flex flex-column gap-2 overflow-auto">
           <Schedules date={currentDate} />
         </div>

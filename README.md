@@ -85,8 +85,15 @@ Desenvolva uma rotina para consulta de pacientes agendados e atendidos, apresent
 - Axios
 - uuid
 
-## Design 
+## Design
 
 Icon collection: [Svg repo](https://www.svgrepo.com/collection/solar-broken-line-icons/)
 
 Illustration collection: [unDraw](https://undraw.co/search/doctor)
+
+## O que não foi contemplado
+
+- Cadastro e gerenciamento de pacientes
+- Edição do cadastro de profissional
+- Paginação na tela de profissionais
+- Busca de profissionais e agendamentos

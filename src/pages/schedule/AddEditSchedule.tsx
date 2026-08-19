@@ -1,4 +1,5 @@
 import { findAddress } from '@/api/cep';
+import type { SchedulePaymentMethodEnum } from '@/constants/schedule';
 import { formatDateToString } from '@/helpers/date';
 import { scheduleSchema, type ScheduleSchema } from '@/schemas/schedule.schema';
 import useProfessionalStore from '@/store/professionalStore';
@@ -20,7 +21,7 @@ const AddEditSchedule = ({
   editMode?: boolean;
 }) => {
   const { getPaginatedProfessionals, getProfessional } = useProfessionalStore();
-  const { createSchedule } = useScheduleStore();
+  const { createSchedule, updateSchedule } = useScheduleStore();
   const {
     register,
     handleSubmit,
@@ -31,7 +32,7 @@ const AddEditSchedule = ({
     resolver: zodResolver(scheduleSchema),
     defaultValues: editMode
       ? {
-          date: formatDateToString(selectedDate).fullDate,
+          date: formatDateToString(new Date(schedule?.date ?? '')).fullDate,
 
           professional: schedule?.professional,
 
@@ -56,7 +57,7 @@ const AddEditSchedule = ({
           },
 
           paymentInfo: {
-            method: 'PIX',
+            method: schedule?.paymentInfo.method as SchedulePaymentMethodEnum,
             installments: schedule?.paymentInfo.installments,
           },
         }
@@ -89,13 +90,22 @@ const AddEditSchedule = ({
   };
 
   const onSubmit = (data: ScheduleSchema) => {
-    createSchedule({
-      date: selectedDate?.toString() ?? '0000/00/00',
+    const dataCopy = {
+      date: data.date,
       professional: data.professional,
       patient: data.patient,
       paymentInfo: data.paymentInfo,
       price: data.price,
-    });
+    };
+
+    if (editMode && schedule)
+      updateSchedule(schedule.id, {
+        ...dataCopy,
+        id: schedule.id,
+        status: schedule.status,
+        transferred: schedule.transferred,
+      });
+    else createSchedule(dataCopy);
 
     setTimeout(() => {
       handleModalOpen(false);
@@ -115,7 +125,7 @@ const AddEditSchedule = ({
               <h5 className="modal-title">
                 {editMode
                   ? `Editar agendamento`
-                  : `Agendar para dia ${formatDateToString(selectedDate).day}`}
+                  : `Agendar para dia ${formatDateToString(selectedDate).normalizedDay}`}
               </h5>
 
               <button
@@ -331,7 +341,7 @@ const AddEditSchedule = ({
                   <div className="input-group has-validation">
                     <select
                       className={`form-control ${errors.paymentInfo?.method ? 'is-invalid' : ''}`}
-                      aria-label="Default select example"
+                      aria-label="Selecione forma de pagamento"
                       id="payment-method"
                       {...register('paymentInfo.method')}
                     >
@@ -352,7 +362,7 @@ const AddEditSchedule = ({
                     <div className="input-group has-validation">
                       <select
                         className={`form-control ${errors.paymentInfo?.installments ? 'is-invalid' : ''}`}
-                        aria-label="Default select example"
+                        aria-label="Selecione quantidade de parcelas"
                         id="payment-installments"
                         {...register('paymentInfo.installments')}
                       >
