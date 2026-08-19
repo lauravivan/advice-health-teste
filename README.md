@@ -84,3 +84,9 @@ Desenvolva uma rotina para consulta de pacientes agendados e atendidos, apresent
 - RHF + zod
 - Axios
 - uuid
+
+## Design 
+
+Icon collection: [Svg repo](https://www.svgrepo.com/collection/solar-broken-line-icons/)
+
+Illustration collection: [unDraw](https://undraw.co/search/doctor)
