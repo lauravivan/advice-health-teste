@@ -97,6 +97,43 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
                   )}
                 </div>
               </div>
+              <div className="d-flex gap-3">
+                <div className="input-group has-validation">
+                  <input
+                    id="price"
+                    className={`form-control ${
+                      errors.consultation_info?.price ? 'is-invalid' : ''
+                    }`}
+                    placeholder="Valor da consulta (R$)"
+                    {...register('consultation_info.price')}
+                  />
+                  {errors.consultation_info?.price?.message && (
+                    <div className="invalid-feedback">
+                      {errors.consultation_info?.price.message}
+                    </div>
+                  )}
+                </div>
+                <div className="input-group has-validation">
+                  <div className="input-group gap-2">
+                    <input
+                      id="insurance"
+                      type="checkbox"
+                      className={`form-check-input ${
+                        errors.accepts_insurance ? 'is-invalid' : ''
+                      }`}
+                      {...register('accepts_insurance')}
+                    />
+                    <label className="form-check-label" htmlFor="insurance">
+                      Aceita convênio
+                    </label>
+                  </div>
+                  {errors.accepts_insurance?.message && (
+                    <div className="invalid-feedback">
+                      {errors.accepts_insurance.message}
+                    </div>
+                  )}
+                </div>
+              </div>
               <button type="submit" className="me-auto btn btn-primary">
                 Cadastrar
               </button>

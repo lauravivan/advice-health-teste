@@ -1,7 +1,9 @@
 import DoctorsImg from '@/assets/undraw_medicine_hqqg.svg';
 import Schedules from '@/components/Schedules';
+import { ScheduleStatus } from '@/constants/schedule';
 import { formatDateToString } from '@/helpers/date';
 import useScheduleStore from '@/store/scheduleStore';
+import { isSameDay } from 'date-fns';
 
 const DashboardCard = ({
   title,
@@ -21,9 +23,40 @@ const DashboardCard = ({
 };
 
 const Dashboard = () => {
-  const { getDailyTotalSchedules, getDailyTotalAttendedSchedules } =
-    useScheduleStore();
+  const { schedules } = useScheduleStore();
   const currentDate = new Date();
+
+  const getDailyTotalSchedules = () => {
+    const date = new Date();
+    const schs = schedules.filter((schedule) =>
+      isSameDay(new Date(schedule.date), date)
+    );
+    return schs.length;
+  };
+
+  const getDailyTotalAttendedSchedules = () => {
+    const date = new Date();
+    const schs = schedules.filter((schedule) =>
+      isSameDay(new Date(schedule.date), date)
+    );
+    const schedulesAttended = schs.filter(
+      (s) => s.status === ScheduleStatus.ATTENDED
+    );
+    return schedulesAttended.length;
+  };
+
+  const getDailyBilling = () => {
+    const date = new Date();
+    const schs = schedules.filter((schedule) =>
+      isSameDay(new Date(schedule.date), date)
+    );
+    const schedulesAttended = schs.filter(
+      (s) => s.status === ScheduleStatus.ATTENDED
+    );
+    return schedulesAttended.reduce((acc, current) => {
+      return acc + parseFloat(current.price);
+    }, 0);
+  };
 
   return (
     <div className="d-flex flex-column w-100 h-100 gap-3">
@@ -39,7 +72,7 @@ const Dashboard = () => {
             <span>{getDailyTotalAttendedSchedules()}</span>
           </DashboardCard>
           <DashboardCard title="Faturamento do dia">
-            <span>0</span>
+            <span>R$ {getDailyBilling()}</span>
           </DashboardCard>
         </div>
       </div>

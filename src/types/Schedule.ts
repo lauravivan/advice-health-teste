@@ -18,8 +18,9 @@ export interface Schedule {
   };
   paymentInfo: {
     method: string;
-    installments?: number;
+    installments?: string;
   };
   status: string;
   transferred: boolean;
+  price: string;
 }

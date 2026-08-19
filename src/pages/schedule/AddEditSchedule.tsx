@@ -1,11 +1,12 @@
-import { findAddress } from "@/api/cep";
-import { formatDateToString } from "@/helpers/date";
-import { scheduleSchema, type ScheduleSchema } from "@/schemas/schedule.schema";
-import useProfessionalStore from "@/store/professionalStore";
-import useScheduleStore from "@/store/scheduleStore";
-import type { Schedule } from "@/types/Schedule";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { findAddress } from '@/api/cep';
+import { formatDateToString } from '@/helpers/date';
+import { scheduleSchema, type ScheduleSchema } from '@/schemas/schedule.schema';
+import useProfessionalStore from '@/store/professionalStore';
+import useScheduleStore from '@/store/scheduleStore';
+import type { Schedule } from '@/types/Schedule';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 const AddEditSchedule = ({
   handleModalOpen,
@@ -18,13 +19,14 @@ const AddEditSchedule = ({
   schedule?: Schedule;
   editMode?: boolean;
 }) => {
-  const { getPaginatedProfessionals } = useProfessionalStore();
+  const { getPaginatedProfessionals, getProfessional } = useProfessionalStore();
   const { createSchedule } = useScheduleStore();
   const {
     register,
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm<ScheduleSchema>({
     resolver: zodResolver(scheduleSchema),
     defaultValues: editMode
@@ -32,6 +34,9 @@ const AddEditSchedule = ({
           date: formatDateToString(selectedDate).fullDate,
 
           professional: schedule?.professional,
+
+          price: getProfessional(schedule?.professional ?? '')
+            ?.consultation_info?.price,
 
           patient: {
             fullName: schedule?.patient.fullName,
@@ -51,31 +56,45 @@ const AddEditSchedule = ({
           },
 
           paymentInfo: {
-            method: "PIX",
-            // installments: schedule?.paymentInfo.installments,
+            method: 'PIX',
+            installments: schedule?.paymentInfo.installments,
           },
         }
       : {
           date: formatDateToString(selectedDate).fullDate,
+          price: '00.00',
         },
   });
+
+  const professionalWatch = watch('professional');
+  const paymentMethodWatch = watch('paymentInfo.method');
+
+  useEffect(() => {
+    if (professionalWatch)
+      setValue(
+        'price',
+        getProfessional(professionalWatch ?? '')?.consultation_info?.price ??
+          '00.00'
+      );
+  }, [professionalWatch]);
 
   const handleCEP = async (CEP: string) => {
     const res = await findAddress(CEP);
 
-    if (res.logradouro) setValue("patient.address.street", res.logradouro);
-    if (res.bairro) setValue("patient.address.neighborhood", res.bairro);
-    if (res.localidade) setValue("patient.address.city", res.localidade);
+    if (res.logradouro) setValue('patient.address.street', res.logradouro);
+    if (res.bairro) setValue('patient.address.neighborhood', res.bairro);
+    if (res.localidade) setValue('patient.address.city', res.localidade);
     if (res.complemento)
-      setValue("patient.address.additionalInfo", res.complemento);
+      setValue('patient.address.additionalInfo', res.complemento);
   };
 
   const onSubmit = (data: ScheduleSchema) => {
     createSchedule({
-      date: selectedDate?.toString() ?? "0000/00/00",
+      date: selectedDate?.toString() ?? '0000/00/00',
       professional: data.professional,
       patient: data.patient,
       paymentInfo: data.paymentInfo,
+      price: data.price,
     });
 
     setTimeout(() => {
@@ -118,11 +137,46 @@ const AddEditSchedule = ({
                       className="form-control"
                       id="schedule-datetime"
                       type="datetime-local"
-                      {...register("date")}
+                      {...register('date')}
                     />
                     {errors.date?.message && (
                       <div className="invalid-feedback">
                         {errors.date.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="input-group has-validation">
+                    <select
+                      className={`form-control ${errors.professional ? 'is-invalid' : ''}`}
+                      aria-label="Default select example"
+                      id="professional"
+                      {...register('professional')}
+                    >
+                      <option value="" selected>
+                        Selecione uma pessoa profissional
+                      </option>
+                      {getPaginatedProfessionals().map((p) => (
+                        <option key={p.id} value={p.id}>
+                          {p.fullName} - {p.crm}{' '}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.professional?.message && (
+                      <div className="invalid-feedback">
+                        {errors.professional.message}
+                      </div>
+                    )}
+                  </div>
+                  <div className="input-group has-validation">
+                    <input
+                      className="form-control"
+                      id="price"
+                      placeholder="Valor da consulta (R$)"
+                      {...register('price')}
+                    />
+                    {errors.price?.message && (
+                      <div className="invalid-feedback">
+                        {errors.price.message}
                       </div>
                     )}
                   </div>
@@ -131,10 +185,10 @@ const AddEditSchedule = ({
                   <h5>Dados do paciente</h5>
                   <div className="input-group has-validation">
                     <input
-                      className={`form-control ${errors.patient?.fullName ? "is-invalid" : ""}`}
+                      className={`form-control ${errors.patient?.fullName ? 'is-invalid' : ''}`}
                       placeholder="Nome completo"
                       id="patient-full-name"
-                      {...register("patient.fullName")}
+                      {...register('patient.fullName')}
                     />
                     {errors.patient?.fullName?.message && (
                       <div className="invalid-feedback">
@@ -144,11 +198,11 @@ const AddEditSchedule = ({
                   </div>
                   <div className="input-group has-validation">
                     <input
-                      className={`form-control ${errors.patient?.cpf ? "is-invalid" : ""}`}
+                      className={`form-control ${errors.patient?.cpf ? 'is-invalid' : ''}`}
                       placeholder="CPF"
                       maxLength={11}
                       id="patient-cpf"
-                      {...register("patient.cpf")}
+                      {...register('patient.cpf')}
                     />
                     {errors.patient?.cpf?.message && (
                       <div className="invalid-feedback">
@@ -158,10 +212,10 @@ const AddEditSchedule = ({
                   </div>
                   <div className="input-group has-validation">
                     <input
-                      className={`form-control ${errors.patient?.birthDate ? "is-invalid" : ""}`}
+                      className={`form-control ${errors.patient?.birthDate ? 'is-invalid' : ''}`}
                       type="date"
                       id="patient-birthdate"
-                      {...register("patient.birthDate")}
+                      {...register('patient.birthDate')}
                     />
                     {errors.patient?.birthDate?.message && (
                       <div className="invalid-feedback">
@@ -172,10 +226,10 @@ const AddEditSchedule = ({
                   <div className="d-flex flex-column gap-2">
                     <div className="input-group has-validation">
                       <input
-                        className={`form-control ${errors.patient?.address?.cep ? "is-invalid" : ""}`}
+                        className={`form-control ${errors.patient?.address?.cep ? 'is-invalid' : ''}`}
                         placeholder="CEP"
                         id="patient-address-cep"
-                        {...register("patient.address.cep")}
+                        {...register('patient.address.cep')}
                         maxLength={8}
                         onBlur={(e) => handleCEP(e.currentTarget.value)}
                       />
@@ -188,10 +242,10 @@ const AddEditSchedule = ({
                     <div className="d-flex gap-2">
                       <div className="input-group has-validation">
                         <input
-                          className={`form-control flex-fill ${errors.patient?.address?.street ? "is-invalid" : ""}`}
+                          className={`form-control flex-fill ${errors.patient?.address?.street ? 'is-invalid' : ''}`}
                           placeholder="Rua"
                           id="patient-address-street"
-                          {...register("patient.address.street")}
+                          {...register('patient.address.street')}
                         />
                         {errors.patient?.address?.street?.message && (
                           <div className="invalid-feedback">
@@ -201,11 +255,11 @@ const AddEditSchedule = ({
                       </div>
                       <div className="input-group has-validation">
                         <input
-                          className={`form-control ${errors.patient?.address?.number ? "is-invalid" : ""}`}
+                          className={`form-control ${errors.patient?.address?.number ? 'is-invalid' : ''}`}
                           placeholder="Número"
                           type="number"
                           id="patient-address-number"
-                          {...register("patient.address.number")}
+                          {...register('patient.address.number')}
                           defaultValue={0}
                           min={0}
                         />
@@ -218,10 +272,10 @@ const AddEditSchedule = ({
                     </div>
                     <div className="input-group has-validation">
                       <input
-                        className={`form-control ${errors.patient?.address?.cep ? "is-invalid" : ""}`}
+                        className={`form-control ${errors.patient?.address?.cep ? 'is-invalid' : ''}`}
                         placeholder="Complemento"
                         id="patient-address-addinfo"
-                        {...register("patient.address.additionalInfo")}
+                        {...register('patient.address.additionalInfo')}
                       />
                       {errors.patient?.address?.cep?.message && (
                         <div className="invalid-feedback">
@@ -232,10 +286,10 @@ const AddEditSchedule = ({
                     <div className="d-flex gap-2">
                       <div className="input-group has-validation">
                         <input
-                          className={`form-control ${errors.patient?.address?.neighborhood ? "is-invalid" : ""}`}
+                          className={`form-control ${errors.patient?.address?.neighborhood ? 'is-invalid' : ''}`}
                           placeholder="Bairro"
                           id="patient-address-neighborhood"
-                          {...register("patient.address.neighborhood")}
+                          {...register('patient.address.neighborhood')}
                         />
                         {errors.patient?.address?.neighborhood?.message && (
                           <div className="invalid-feedback">
@@ -245,10 +299,10 @@ const AddEditSchedule = ({
                       </div>
                       <div className="input-group has-validation">
                         <input
-                          className={`form-control ${errors.patient?.address?.city ? "is-invalid" : ""}`}
+                          className={`form-control ${errors.patient?.address?.city ? 'is-invalid' : ''}`}
                           placeholder="Cidade"
                           id="patient-address-city"
-                          {...register("patient.address.city")}
+                          {...register('patient.address.city')}
                         />
                         {errors.patient?.address?.city?.message && (
                           <div className="invalid-feedback">
@@ -260,10 +314,10 @@ const AddEditSchedule = ({
                   </div>
                   <div className="input-group has-validation">
                     <textarea
-                      className={`form-control ${errors.patient?.additionalInfo ? "is-invalid" : ""}`}
+                      className={`form-control ${errors.patient?.additionalInfo ? 'is-invalid' : ''}`}
                       placeholder="Queixa do paciente"
                       id="patient-add-info"
-                      {...register("patient.additionalInfo")}
+                      {...register('patient.additionalInfo')}
                     />
                     {errors.patient?.additionalInfo?.message && (
                       <div className="invalid-feedback">
@@ -273,38 +327,13 @@ const AddEditSchedule = ({
                   </div>
                 </div>
                 <div className="d-flex flex-column gap-2">
-                  <h5>Dados da pessoa profissional</h5>
-                  <div className="input-group has-validation">
-                    <select
-                      className={`form-control ${errors.professional ? "is-invalid" : ""}`}
-                      aria-label="Default select example"
-                      id="professional"
-                      {...register("professional")}
-                    >
-                      <option value="" selected>
-                        Selecione uma pessoa profissional
-                      </option>
-                      {getPaginatedProfessionals().map((p) => (
-                        <option key={p.id} value={p.id}>
-                          {p.fullName} - {p.crm}{" "}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.professional?.message && (
-                      <div className="invalid-feedback">
-                        {errors.professional.message}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="d-flex flex-column gap-2">
                   <h5>Dados do pagamento</h5>
                   <div className="input-group has-validation">
                     <select
-                      className={`form-control ${errors.paymentInfo?.method ? "is-invalid" : ""}`}
+                      className={`form-control ${errors.paymentInfo?.method ? 'is-invalid' : ''}`}
                       aria-label="Default select example"
                       id="payment-method"
-                      {...register("paymentInfo.method")}
+                      {...register('paymentInfo.method')}
                     >
                       <option value="" selected>
                         Escolha forma de pagamento
@@ -319,9 +348,33 @@ const AddEditSchedule = ({
                       </div>
                     )}
                   </div>
+                  {paymentMethodWatch === 'CREDIT-CARD' && (
+                    <div className="input-group has-validation">
+                      <select
+                        className={`form-control ${errors.paymentInfo?.installments ? 'is-invalid' : ''}`}
+                        aria-label="Default select example"
+                        id="payment-installments"
+                        {...register('paymentInfo.installments')}
+                      >
+                        <option value="" selected>
+                          Escolha a quantidade de parcelas
+                        </option>
+                        {Array.from({ length: 4 }, (_, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.paymentInfo?.installments?.message && (
+                        <div className="invalid-feedback">
+                          {errors.paymentInfo.installments.message}
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
                 <button className="btn btn-light" type="submit">
-                  {editMode ? "Editar agendamento" : "Agendar"}
+                  {editMode ? 'Editar agendamento' : 'Agendar'}
                 </button>
               </form>
             </div>

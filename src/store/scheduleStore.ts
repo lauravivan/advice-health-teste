@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { v7 as uuidv7 } from 'uuid';
 import type { Schedule } from '@/types/Schedule';
-import { isSameDay } from 'date-fns';
 import { ScheduleStatus } from '@/constants/schedule';
 
 const LS_KEY = 'advice-health-schedules';
@@ -21,12 +20,10 @@ interface ScheduleStoreState {
     newSchedule: Omit<Schedule, 'id' | 'transferred' | 'status'>
   ) => void;
   setSchedules: (schedules: Schedule[]) => void;
-  getDailyTotalSchedules: () => number;
-  getDailyTotalAttendedSchedules: () => number;
   updateSchedule: (id: string, schedule: Schedule) => void;
 }
 
-const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
+const useScheduleStore = create<ScheduleStoreState>((set) => ({
   schedules: [],
   createSchedule: (
     newSchedule: Omit<Schedule, 'id' | 'transferred' | 'status'>
@@ -52,23 +49,6 @@ const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
     set(() => ({
       schedules: schedules,
     })),
-  getDailyTotalSchedules: () => {
-    const date = new Date();
-    const schedules = get().schedules.filter((schedule) =>
-      isSameDay(new Date(schedule.date), date)
-    );
-    return schedules.length;
-  },
-  getDailyTotalAttendedSchedules: () => {
-    const date = new Date();
-    const schedules = get().schedules.filter((schedule) =>
-      isSameDay(new Date(schedule.date), date)
-    );
-    const schedulesAttended = schedules.filter(
-      (s) => s.status === ScheduleStatus.ATTENDED
-    );
-    return schedulesAttended.length;
-  },
   updateSchedule: (id: string, schedule: Schedule) => {
     set((state) => {
       const schs = state.schedules.map((s) => (s.id === id ? schedule : s));

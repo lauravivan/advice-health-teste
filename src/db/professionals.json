@@ -7,7 +7,6 @@
     "consultation_info": {
       "price": "350.00"
     },
-    "payment_options": ["PIX", "CREDIT-CARD"],
     "acceptsInsurance": true
   },
   {
@@ -18,7 +17,6 @@
     "consultation_info": {
       "price": "280.00"
     },
-    "payment_options": ["PIX", "MONEY"],
     "acceptsInsurance": false
   },
   {
@@ -29,7 +27,6 @@
     "consultation_info": {
       "price": "250.00"
     },
-    "payment_options": ["PIX", "CREDIT-CARD", "MONEY"],
     "acceptsInsurance": true
   },
   {
@@ -40,7 +37,6 @@
     "consultation_info": {
       "price": "320.00"
     },
-    "payment_options": ["CREDIT-CARD"],
     "acceptsInsurance": false
   },
   {
@@ -51,7 +47,6 @@
     "consultation_info": {
       "price": "300.00"
     },
-    "payment_options": ["PIX", "CREDIT-CARD"],
     "acceptsInsurance": true
   },
   {
@@ -62,7 +57,6 @@
     "consultation_info": {
       "price": "380.00"
     },
-    "payment_options": ["PIX", "MONEY"],
     "acceptsInsurance": false
   },
   {
@@ -73,7 +67,6 @@
     "consultation_info": {
       "price": "290.00"
     },
-    "payment_options": ["PIX", "CREDIT-CARD", "MONEY"],
     "acceptsInsurance": true
   },
   {
@@ -84,7 +77,6 @@
     "consultation_info": {
       "price": "330.00"
     },
-    "payment_options": ["CREDIT-CARD", "MONEY"],
     "acceptsInsurance": false
   },
   {
@@ -95,7 +87,6 @@
     "consultation_info": {
       "price": "270.00"
     },
-    "payment_options": ["PIX"],
     "acceptsInsurance": true
   },
   {
@@ -106,7 +97,6 @@
     "consultation_info": {
       "price": "310.00"
     },
-    "payment_options": ["PIX", "CREDIT-CARD"],
     "acceptsInsurance": false
   },
   {
@@ -114,6 +104,9 @@
     "fullName": "Beatriz Nascimento",
     "crm": "CRM-SP 224791",
     "specialty": "Clínica Geral",
+    "consultation_info": {
+      "price": "350.00"
+    },
     "acceptsInsurance": true
   }
 ]
