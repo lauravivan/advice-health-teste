@@ -1,3 +1,8 @@
-export const SCHEDULE_STATUS = ["ATTENDED", "CANCELED", "SCHEDULED"] as const;
+export const ScheduleStatus = {
+  ATTENDED: 'ATTENDED',
+  CANCELED: 'CANCELED',
+  SCHEDULED: 'SCHEDULED',
+} as const;
 
-export type ScheduleStatus = (typeof SCHEDULE_STATUS)[number];
+export type ScheduleStatusEnum =
+  (typeof ScheduleStatus)[keyof typeof ScheduleStatus];

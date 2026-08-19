@@ -1,10 +1,10 @@
-import { create } from "zustand";
-import { v7 as uuidv7 } from "uuid";
-import type { Schedule } from "@/types/Schedule";
-import { isSameDay } from "date-fns";
-import { SCHEDULE_STATUS } from "@/constants/schedule";
+import { create } from 'zustand';
+import { v7 as uuidv7 } from 'uuid';
+import type { Schedule } from '@/types/Schedule';
+import { isSameDay } from 'date-fns';
+import { ScheduleStatus } from '@/constants/schedule';
 
-const LS_KEY = "advice-health-schedules";
+const LS_KEY = 'advice-health-schedules';
 
 export function getStoredSchedules(): Schedule[] {
   const schedules = localStorage.getItem(LS_KEY);
@@ -18,17 +18,18 @@ export function storeSchedules(schedules: Schedule[]) {
 interface ScheduleStoreState {
   schedules: Schedule[];
   createSchedule: (
-    newSchedule: Omit<Schedule, "id" | "transferred" | "status">,
+    newSchedule: Omit<Schedule, 'id' | 'transferred' | 'status'>
   ) => void;
-  getSchedulesByDate: (date: Date) => Schedule[];
   setSchedules: (schedules: Schedule[]) => void;
   getDailyTotalSchedules: () => number;
+  getDailyTotalAttendedSchedules: () => number;
+  updateSchedule: (id: string, schedule: Schedule) => void;
 }
 
 const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
   schedules: [],
   createSchedule: (
-    newSchedule: Omit<Schedule, "id" | "transferred" | "status">,
+    newSchedule: Omit<Schedule, 'id' | 'transferred' | 'status'>
   ) =>
     set((state) => {
       const schedules = [...state.schedules];
@@ -36,8 +37,8 @@ const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
       schedules.push({
         ...newSchedule,
         id: uuidv7(),
-        status: SCHEDULE_STATUS[2],
-        transferred: false
+        status: ScheduleStatus.SCHEDULED,
+        transferred: false,
       });
 
       storeSchedules(schedules);
@@ -47,16 +48,38 @@ const useScheduleStore = create<ScheduleStoreState>((set, get) => ({
         schedules,
       };
     }),
-  getSchedulesByDate: (date: Date) =>
-    get().schedules.filter((s) => isSameDay(new Date(s.date), date)),
   setSchedules: (schedules: Schedule[]) =>
     set(() => ({
       schedules: schedules,
     })),
   getDailyTotalSchedules: () => {
     const date = new Date();
-    const schedules = get().getSchedulesByDate(date);
+    const schedules = get().schedules.filter((schedule) =>
+      isSameDay(new Date(schedule.date), date)
+    );
     return schedules.length;
+  },
+  getDailyTotalAttendedSchedules: () => {
+    const date = new Date();
+    const schedules = get().schedules.filter((schedule) =>
+      isSameDay(new Date(schedule.date), date)
+    );
+    const schedulesAttended = schedules.filter(
+      (s) => s.status === ScheduleStatus.ATTENDED
+    );
+    return schedulesAttended.length;
+  },
+  updateSchedule: (id: string, schedule: Schedule) => {
+    set((state) => {
+      const schs = state.schedules.map((s) => (s.id === id ? schedule : s));
+
+      storeSchedules(schs);
+
+      return {
+        ...state,
+        schedules: schs,
+      };
+    });
   },
 }));
 

@@ -1,17 +1,17 @@
-import { Route, Routes, BrowserRouter } from "react-router";
-import Aside from "./components/Aside";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
-import Dashboard from "./pages/home/Dashboard";
-import Schedules from "./pages/schedule/Schedules";
-import Professionals from "./pages/professional/Professionals";
-import AddEditProfessional from "./pages/professional/AddEditProfessional";
-import navigation from "./navigation";
-import useProfessionalStore, { getStoredPros } from "./store/professionalStore";
-import { useEffect } from "react";
-import useScheduleStore, { getStoredSchedules } from "./store/scheduleStore";
-import professionals from "@/db/professionals.json";
-import schedules from "@/db/schedules.json";
+import { Route, Routes, BrowserRouter } from 'react-router';
+import Aside from './components/Aside';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Dashboard from './pages/home/Dashboard';
+import Schedules from './pages/schedule/Schedules';
+import Professionals from './pages/professional/Professionals';
+import AddEditProfessional from './pages/professional/AddEditProfessional';
+import navigation from './navigation';
+import useProfessionalStore, { getStoredPros } from './store/professionalStore';
+import { useEffect } from 'react';
+import useScheduleStore, { getStoredSchedules } from './store/scheduleStore';
+import professionals from '@/db/professionals.json';
+import schedules from '@/db/schedules.json';
 
 function App() {
   const { setProfessionals } = useProfessionalStore();
@@ -19,12 +19,22 @@ function App() {
 
   useEffect(() => {
     const pros = getStoredPros();
-    setProfessionals([...professionals, ...pros]);
+    const existingIds = new Set(pros.map((pro) => pro.id));
+
+    setProfessionals([
+      ...pros,
+      ...professionals.filter((pro) => !existingIds.has(pro.id)),
+    ]);
   }, []);
 
   useEffect(() => {
     const schs = getStoredSchedules();
-    setSchedules([...schedules, ...schs]);
+    const existingIds = new Set(schs.map((pro) => pro.id));
+
+    setSchedules([
+      ...schs,
+      ...schedules.filter((pro) => !existingIds.has(pro.id)),
+    ]);
   }, []);
 
   return (

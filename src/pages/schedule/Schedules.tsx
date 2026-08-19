@@ -10,7 +10,7 @@ import {
 } from 'date-fns';
 import { useState } from 'react';
 import { getSafeDate } from '@/helpers/date';
-import Dates from '@/components/Dates';
+import SchedulesComp from '@/components/Schedules';
 
 const getDaysOfTheMonth = (date: Date): Date[] => {
   const firstDay = startOfMonth(date);
@@ -48,7 +48,7 @@ const Schedules = () => {
 
   return (
     <>
-      <div className="d-flex flex-column w-100 h-100">
+      <div className="d-flex flex-column w-100">
         <div className="d-flex w-100 mb-3 align-content-center justify-content-between">
           <div className="d-flex mb-3 align-items-center">
             <button
@@ -108,10 +108,12 @@ const Schedules = () => {
             </li>
           </ul>
         </div>
-        <div className="d-flex flex-column w-100 h-100 rounded overflow-auto">
-          {daily && <Dates date={currentDate} />}
+        <div className="d-flex flex-column w-100 rounded overflow-auto">
+          {daily && <SchedulesComp date={currentDate} />}
           {monthly &&
-            getDaysOfTheMonth(currentDate).map((d) => <Dates date={d} />)}
+            getDaysOfTheMonth(currentDate).map((d) => (
+              <SchedulesComp date={d} />
+            ))}
         </div>
       </div>
     </>

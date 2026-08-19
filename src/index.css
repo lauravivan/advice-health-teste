@@ -14,8 +14,8 @@
   --bs-primary: #0c558e;
   --bs-secondary: #e2e2e2;
 
-  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
-  --heading: system-ui, "Segoe UI", Roboto, sans-serif;
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
@@ -39,6 +39,8 @@
   height: 100vh;
   display: flex;
   box-sizing: border-box;
+  max-width: 2000px;
+  margin: auto;
 }
 
 body {
