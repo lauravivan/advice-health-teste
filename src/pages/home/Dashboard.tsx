@@ -60,11 +60,11 @@ const Dashboard = () => {
 
   return (
     <div className="d-flex flex-column w-100 h-100 gap-3">
-      <div className="d-flex gap-3">
+      <div className="d-flex flex-column flex-md-row gap-3">
         <div className="w-25 d-flex align-items-end h-100">
           <img className="img-fluid h-auto" src={DoctorsImg} />
         </div>
-        <div className="d-flex flex-fill gap-3">
+        <div className="d-flex flex-column flex-md-row flex-fill gap-3">
           <DashboardCard title="Número de agendamentos do dia">
             <span>{getDailyTotalSchedules()}</span>
           </DashboardCard>

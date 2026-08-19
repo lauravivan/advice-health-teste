@@ -44,8 +44,8 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
         <h2 className="text-center mt-3">
           {editMode ? 'Editar' : 'Cadastrar'} profissional
         </h2>
-        <div className="d-flex w-100 h-100">
-          <div className="flex-fill w-75 m-auto bg-light rounded p-3">
+        <div className="d-flex flex-column flex-md-row w-100 h-100">
+          <div className="flex-fill w-100 w-md-75 m-md-auto bg-light rounded p-3">
             <p className="fst-italic">
               Preencha as informações da pessoa profissional
             </p>

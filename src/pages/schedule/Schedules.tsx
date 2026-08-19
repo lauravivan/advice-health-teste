@@ -82,7 +82,7 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${daily ? ' active' : ''}`}
+                className={`btn btn-sm btn-light${daily ? ' active' : ''}`}
                 onClick={() => setCurrentView('DAILY')}
               >
                 Diária
@@ -91,7 +91,7 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${weekly ? ' active' : ''}`}
+                className={`btn btn-sm btn-light${weekly ? ' active' : ''}`}
                 onClick={() => setCurrentView('WEEKLY')}
               >
                 Semanal
@@ -100,7 +100,7 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${monthly ? ' active' : ''}`}
+                className={`btn btn-sm btn-light${monthly ? ' active' : ''}`}
                 onClick={() => setCurrentView('MONTHLY')}
               >
                 Mensal

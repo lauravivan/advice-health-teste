@@ -4,13 +4,13 @@ import PersonIcon from './icons/Person';
 import HomeIcon from './icons/Home';
 
 const AsideIconItem = ({ children }: { children: React.ReactNode }) => {
-  return <li className="bg-secondary:hover">{children}</li>;
+  return <li className="bg-secondary:hover p-1">{children}</li>;
 };
 
 const Aside = () => {
   return (
-    <aside className="d-flex bg-primary h-100 w-[50px] p-3">
-      <ul className="list-unstyled d-flex flex-column gap-3">
+    <aside className="d-flex bg-primary h-md-100 pt-3 p-md-3 z-3">
+      <ul className="list-unstyled d-flex flex-md-column gap-3">
         <AsideIconItem>
           <Link title="Página inicial" to="/">
             <HomeIcon />

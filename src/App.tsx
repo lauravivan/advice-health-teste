@@ -39,9 +39,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <main className="d-flex w-100 h-100">
+      <main className="d-flex flex-column flex-column-reverse flex-md-row w-100 h-100">
         <Aside />
-        <div className="d-flex flex-column w-100 h-100">
+        <div className="d-flex flex-column w-100 h-100 mb-5">
           <Header />
           <div className="d-flex p-3 w-100 h-100">
             <Routes>

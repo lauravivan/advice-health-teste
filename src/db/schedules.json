@@ -5,7 +5,7 @@
     "date": "2026-08-19T09:00:00",
     "status": "ATTENDED",
     "transferred": false,
-    "price": 350.0,
+    "price": "350.0",
     "patient": {
       "fullName": "Carlos Eduardo Silva",
       "cpf": "123.456.789-01",
@@ -30,7 +30,7 @@
     "date": "2026-08-19T10:30:00",
     "status": "ATTENDED",
     "transferred": true,
-    "price": 280.0,
+    "price": "280.0",
     "patient": {
       "fullName": "Ana Paula Mendes",
       "cpf": "234.567.890-12",
@@ -47,7 +47,7 @@
     },
     "paymentInfo": {
       "method": "CREDIT-CARD",
-      "installments": 2
+      "installments": "2"
     }
   },
   {
@@ -56,7 +56,7 @@
     "date": "2026-08-20T08:30:00",
     "status": "CANCELED",
     "transferred": false,
-    "price": 250.0,
+    "price": "250.0",
     "patient": {
       "fullName": "Marcos Vinícius Rocha",
       "cpf": "345.678.901-23",
@@ -81,7 +81,7 @@
     "date": "2026-08-20T14:00:00",
     "status": "ATTENDED",
     "transferred": false,
-    "price": 320.0,
+    "price": "320.0",
     "patient": {
       "fullName": "Fernanda Oliveira Costa",
       "cpf": "456.789.012-34",
@@ -98,7 +98,7 @@
     },
     "paymentInfo": {
       "method": "CREDIT-CARD",
-      "installments": 3
+      "installments": "3"
     }
   },
   {
@@ -107,7 +107,7 @@
     "date": "2026-08-21T09:30:00",
     "status": "SCHEDULED",
     "transferred": false,
-    "price": 300.0,
+    "price": "300.0",
     "patient": {
       "fullName": "Ricardo Almeida Santos",
       "cpf": "567.890.123-45",
@@ -132,7 +132,7 @@
     "date": "2026-08-21T15:30:00",
     "status": "SCHEDULED",
     "transferred": true,
-    "price": 380.0,
+    "price": "380.0",
     "patient": {
       "fullName": "Juliana Martins Pereira",
       "cpf": "678.901.234-56",
@@ -149,7 +149,7 @@
     },
     "paymentInfo": {
       "method": "CREDIT-CARD",
-      "installments": 4
+      "installments": "4"
     }
   },
   {
@@ -158,7 +158,7 @@
     "date": "2026-08-22T10:00:00",
     "status": "CANCELED",
     "transferred": true,
-    "price": 290.0,
+    "price": "290.0",
     "patient": {
       "fullName": "Camila Ferreira Lima",
       "cpf": "789.012.345-67",
@@ -183,7 +183,7 @@
     "date": "2026-08-24T16:00:00",
     "status": "SCHEDULED",
     "transferred": false,
-    "price": 330.0,
+    "price": "330.0",
     "patient": {
       "fullName": "Daniel Henrique Souza",
       "cpf": "890.123.456-78",
@@ -200,7 +200,7 @@
     },
     "paymentInfo": {
       "method": "CREDIT-CARD",
-      "installments": 2
+      "installments": "2"
     }
   },
   {
@@ -209,7 +209,7 @@
     "date": "2026-08-25T11:00:00",
     "status": "ATTENDED",
     "transferred": true,
-    "price": 270.0,
+    "price": "270.0",
     "patient": {
       "fullName": "Beatriz Cristina Alves",
       "cpf": "901.234.567-89",
@@ -234,7 +234,7 @@
     "date": "2026-08-26T13:30:00",
     "status": "SCHEDULED",
     "transferred": false,
-    "price": 310.0,
+    "price": "310.0",
     "patient": {
       "fullName": "Gustavo Henrique Martins",
       "cpf": "012.345.678-90",
@@ -259,7 +259,7 @@
     "date": "2026-08-27T08:00:00",
     "status": "CANCELED",
     "transferred": false,
-    "price": 350.0,
+    "price": "350.0",
     "patient": {
       "fullName": "Larissa Fernanda Gomes",
       "cpf": "112.233.445-56",
@@ -276,7 +276,7 @@
     },
     "paymentInfo": {
       "method": "CREDIT-CARD",
-      "installments": 2
+      "installments": "2"
     }
   }
 ]
