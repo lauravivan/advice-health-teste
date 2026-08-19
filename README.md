@@ -1,77 +1,86 @@
-# React + TypeScript + Vite
+# Teste técnico Advice Health
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Desenvolvimento de um sistema de gerenciamento de consultório
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Área de Trabalho / Dashboard
 
-## React Compiler
+Desenvolva uma área de trabalho que forneça uma visão geral do consultório, apresentando informações como:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+    Número de agendamentos do dia;
+    Número de pacientes atendidos no dia;
+    Faturamento do dia;
+    Agenda do dia;
+    Avisos e lembretes.
 
-Note: This will impact Vite dev & build performances.
+A proposta é oferecer ao usuário uma visão gerencial que auxilie na organização e gestão da rotina do consultório.
 
-## Expanding the ESLint configuration
+2. Agendamento de Consultas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Desenvolva uma rotina que permita visualizar e gerenciar a agenda dos médicos do consultório.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+A solução deverá considerar funcionalidades como:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+    Incluir agendamentos;
+    Alterar agendamentos;
+    Cancelar agendamentos;
+    Transferir agendamentos;
+    Indisponibilizar períodos em que o médico estará ausente.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Durante o agendamento, deverão ser coletados dados do paciente, como:
 
-```
+    Nome completo;
+    CPF;
+    Data de nascimento;
+    Endereço;
+    Entre outras informações necessárias.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Considere também que o pagamento da consulta ocorrerá nesse momento.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Atente-se às possíveis microinterações da tela, como mensagens, notificações e validações de campos obrigatórios.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Consulta de Agendamentos
 
-```
+Desenvolva uma rotina para consulta de pacientes agendados e atendidos, apresentando informações relacionadas:
+
+    Ao paciente;
+    Ao agendamento;
+    Ao médico;
+    Aos valores cobrados.
+
+## Modelagem - entidades
+
+### Paciente
+
+- Nome completo
+- CPF
+- Data de nascimento
+- Endereço
+
+### Médico(a)
+
+- Nome completo
+- Especialização
+- Registro
+
+### Agendamento
+
+- Paciente
+- Médico(a)
+- Data
+- Observação
+- Status do atendimento
+- Valor da consulta
+
+## Principais tecnologias utilizadas
+
+- React
+- Bootstrap
+- Vite
+- Eslint
+- date-fns
+- Zustand
+- RHF + zod
+- Axios
+- uuid
