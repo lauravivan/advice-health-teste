@@ -1,5 +1,5 @@
-import ArrowLeftIcon from "@/components/icons/ArrowLeft";
-import ArrowRightIcon from "@/components/icons/ArrowRight";
+import ArrowLeftIcon from '@/components/icons/ArrowLeft';
+import ArrowRightIcon from '@/components/icons/ArrowRight';
 import {
   addDays,
   addMonths,
@@ -7,10 +7,10 @@ import {
   startOfMonth,
   subDays,
   subMonths,
-} from "date-fns";
-import { useState } from "react";
-import { getSafeDate } from "@/helpers/date";
-import Dates from "@/components/Dates";
+} from 'date-fns';
+import { useState } from 'react';
+import { getSafeDate } from '@/helpers/date';
+import Dates from '@/components/Dates';
 
 const getDaysOfTheMonth = (date: Date): Date[] => {
   const firstDay = startOfMonth(date);
@@ -25,18 +25,12 @@ const getDaysOfTheMonth = (date: Date): Date[] => {
   });
 };
 
-enum SchedulesView {
-  DAILY = "DAILY",
-  WEEKLY = "WEEKLY",
-  MONTHLY = "MONTHLY",
-}
+type SchedulesView = 'DAILY' | 'WEEKLY' | 'MONTHLY';
 
 const Schedules = () => {
   const [currentDate, setCurrentDate] = useState<Date>(getSafeDate(new Date()));
   const [editDateMode, setEditDateMode] = useState(false);
-  const [currentView, setCurrentView] = useState<SchedulesView>(
-    SchedulesView.MONTHLY,
-  );
+  const [currentView, setCurrentView] = useState<SchedulesView>('MONTHLY');
 
   const handleEditMode = () => {
     setEditDateMode((prev) => !prev);
@@ -47,6 +41,10 @@ const Schedules = () => {
     setCurrentDate(getSafeDate(new Date(date)));
     setEditDateMode(false);
   };
+
+  const daily = currentView === 'DAILY';
+  const weekly = currentView === 'WEEKLY';
+  const monthly = currentView === 'MONTHLY';
 
   return (
     <>
@@ -84,8 +82,8 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${currentView === SchedulesView.DAILY ? " active" : ""}`}
-                onClick={() => setCurrentView(SchedulesView.DAILY)}
+                className={`btn btn-light${daily ? ' active' : ''}`}
+                onClick={() => setCurrentView('DAILY')}
               >
                 Diária
               </button>
@@ -93,8 +91,8 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${currentView === SchedulesView.WEEKLY ? " active" : ""}`}
-                onClick={() => setCurrentView(SchedulesView.WEEKLY)}
+                className={`btn btn-light${weekly ? ' active' : ''}`}
+                onClick={() => setCurrentView('WEEKLY')}
               >
                 Semanal
               </button>
@@ -102,8 +100,8 @@ const Schedules = () => {
             <li className="nav-item">
               <button
                 type="button"
-                className={`btn btn-light${currentView === SchedulesView.MONTHLY ? " active" : ""}`}
-                onClick={() => setCurrentView(SchedulesView.MONTHLY)}
+                className={`btn btn-light${monthly ? ' active' : ''}`}
+                onClick={() => setCurrentView('MONTHLY')}
               >
                 Mensal
               </button>
@@ -111,8 +109,8 @@ const Schedules = () => {
           </ul>
         </div>
         <div className="d-flex flex-column w-100 h-100 rounded overflow-auto">
-          {currentView === SchedulesView.DAILY && <Dates date={currentDate} />}
-          {currentView === SchedulesView.MONTHLY &&
+          {daily && <Dates date={currentDate} />}
+          {monthly &&
             getDaysOfTheMonth(currentDate).map((d) => <Dates date={d} />)}
         </div>
       </div>

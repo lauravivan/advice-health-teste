@@ -1,12 +1,15 @@
-import navigation from "@/navigation";
-import useProfessionalStore from "@/store/professionalStore";
-import { useNavigate } from "react-router";
-import DoctorsImg from "@/assets/undraw_doctors_djoj.svg";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { professionalSchema, type ProfessionalSchema } from "@/schemas/professional.schema";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { createPortal } from "react-dom";
+import navigation from '@/navigation';
+import useProfessionalStore from '@/store/professionalStore';
+import { useNavigate } from 'react-router';
+import DoctorsImg from '@/assets/undraw_doctors_djoj.svg';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  professionalSchema,
+  type ProfessionalSchema,
+} from '@/schemas/professional.schema';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
   const { createProfessional } = useProfessionalStore();
@@ -25,6 +28,7 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
       fullName: data.fullName,
       crm: data.crm,
       specialty: data.specialty,
+      acceptsInsurance: false,
     });
 
     setShowAlert(true);
@@ -38,7 +42,7 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
     <>
       <div className="d-flex flex-column w-100 h-100">
         <h2 className="text-center mt-3">
-          {editMode ? "Editar" : "Cadastrar"} profissional
+          {editMode ? 'Editar' : 'Cadastrar'} profissional
         </h2>
         <div className="d-flex w-100 h-100">
           <div className="flex-fill w-75 m-auto bg-light rounded p-3">
@@ -53,10 +57,10 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
                 <input
                   id="fullName"
                   className={`form-control ${
-                    errors.fullName ? "is-invalid" : ""
+                    errors.fullName ? 'is-invalid' : ''
                   }`}
                   placeholder="Nome completo"
-                  {...register("fullName")}
+                  {...register('fullName')}
                 />
                 {errors.fullName?.message && (
                   <div className="invalid-feedback">
@@ -69,9 +73,9 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
                 <div className="input-group has-validation">
                   <input
                     id="crm"
-                    className={`form-control ${errors.crm ? "is-invalid" : ""}`}
+                    className={`form-control ${errors.crm ? 'is-invalid' : ''}`}
                     placeholder="CRM"
-                    {...register("crm")}
+                    {...register('crm')}
                   />
                   {errors.crm?.message && (
                     <div className="invalid-feedback">{errors.crm.message}</div>
@@ -81,10 +85,10 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
                   <input
                     id="specialty"
                     className={`form-control ${
-                      errors.specialty ? "is-invalid" : ""
+                      errors.specialty ? 'is-invalid' : ''
                     }`}
                     placeholder="Especialidade"
-                    {...register("specialty")}
+                    {...register('specialty')}
                   />
                   {errors.specialty?.message && (
                     <div className="invalid-feedback">
@@ -103,12 +107,16 @@ const AddEditProfessional = ({ editMode = false }: { editMode?: boolean }) => {
           </div>
         </div>
       </div>
-      {showAlert && createPortal(
-        <div className="position-absolute bottom-0 end-0 m-2 alert alert-success" role="alert">
-          Profissional cadastrado com sucesso!
-        </div>,
-        document.getElementById("root")!,
-      )}
+      {showAlert &&
+        createPortal(
+          <div
+            className="position-absolute bottom-0 end-0 m-2 alert alert-success"
+            role="alert"
+          >
+            Profissional cadastrado com sucesso!
+          </div>,
+          document.getElementById('root')!
+        )}
     </>
   );
 };
